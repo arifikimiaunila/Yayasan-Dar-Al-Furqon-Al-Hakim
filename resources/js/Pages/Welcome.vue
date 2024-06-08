@@ -1,0 +1,20 @@
+<script setup lang='ts'>
+import Headslot from '@/Components/HeadSlot.vue'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
+import Footer from '@/Components/Footer.vue'
+</script>
+
+<template>
+  
+<Headslot>Beranda</Headslot>
+
+<GuestLayout>
+<main class="a354-container a354-yellow ">
+<h1 class="a354-cursive a354-center a354- jumbo a354-text-green">
+Assalamualaikum warahmatullahi wabarakaatuh</h1><br>
+<h1 class="a354-cursive a354-center a354- jumbo a354-text-green"> Selamat Datang</h1>
+</main>
+</GuestLayout>
+
+
+</template>
