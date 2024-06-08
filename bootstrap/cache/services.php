@@ -1,4 +1,5 @@
-<?php return array (
+<?php 
+return array (
   'providers' => 
   array (
     0 => 'Illuminate\\Auth\\AuthServiceProvider',
@@ -24,28 +25,24 @@
     20 => 'Illuminate\\Validation\\ValidationServiceProvider',
     21 => 'Illuminate\\View\\ViewServiceProvider',
     22 => 'Inertia\\ServiceProvider',
-    23 => 'Laravel\\Fortify\\FortifyServiceProvider',
-    24 => 'Laravel\\Jetstream\\JetstreamServiceProvider',
-    25 => 'Laravel\\Octane\\OctaneServiceProvider',
-    26 => 'Laravel\\Sail\\SailServiceProvider',
-    27 => 'Laravel\\Sanctum\\SanctumServiceProvider',
-    28 => 'Laravel\\Scout\\ScoutServiceProvider',
-    29 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    23 => 'Laravel\\Breeze\\BreezeServiceProvider',
+    24 => 'Laravel\\Fortify\\FortifyServiceProvider',
+    25 => 'Laravel\\Jetstream\\JetstreamServiceProvider',
+    26 => 'Laravel\\Octane\\OctaneServiceProvider',
+    27 => 'Laravel\\Sail\\SailServiceProvider',
+    28 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    29 => 'Laravel\\Scout\\ScoutServiceProvider',
     30 => 'Laravel\\Telescope\\TelescopeServiceProvider',
     31 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    32 => 'LLoadout\\Microsoftgraph\\MicrosoftgraphServiceProvider',
-    33 => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider',
-    34 => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphOnedriveServiceProvider',
-    35 => 'Mostafaznv\\LaraCache\\LaraCacheServiceProvider',
-    36 => 'Carbon\\Laravel\\ServiceProvider',
-    37 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    38 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    39 => 'SocialiteProviders\\Manager\\ServiceProvider',
-    40 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    41 => 'Spatie\\Permission\\PermissionServiceProvider',
-    42 => 'App\\Providers\\AppServiceProvider',
-    43 => 'App\\Providers\\FortifyServiceProvider',
-    44 => 'App\\Providers\\TelescopeServiceProvider',
+    32 => 'Carbon\\Laravel\\ServiceProvider',
+    33 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    34 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    35 => 'Laratrust\\LaratrustServiceProvider',
+    36 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    37 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
+    38 => 'App\\Providers\\AppServiceProvider',
+    39 => 'App\\Providers\\FortifyServiceProvider',
+    40 => 'App\\Providers\\TelescopeServiceProvider',
   ),
   'eager' => 
   array (
@@ -66,17 +63,15 @@
     14 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     15 => 'Laravel\\Scout\\ScoutServiceProvider',
     16 => 'Laravel\\Telescope\\TelescopeServiceProvider',
-    17 => 'LLoadout\\Microsoftgraph\\MicrosoftgraphServiceProvider',
-    18 => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphOnedriveServiceProvider',
-    19 => 'Mostafaznv\\LaraCache\\LaraCacheServiceProvider',
-    20 => 'Carbon\\Laravel\\ServiceProvider',
-    21 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    22 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    23 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    24 => 'Spatie\\Permission\\PermissionServiceProvider',
-    25 => 'App\\Providers\\AppServiceProvider',
-    26 => 'App\\Providers\\FortifyServiceProvider',
-    27 => 'App\\Providers\\TelescopeServiceProvider',
+    17 => 'Carbon\\Laravel\\ServiceProvider',
+    18 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    19 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    20 => 'Laratrust\\LaratrustServiceProvider',
+    21 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    22 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
+    23 => 'App\\Providers\\AppServiceProvider',
+    24 => 'App\\Providers\\FortifyServiceProvider',
+    25 => 'App\\Providers\\TelescopeServiceProvider',
   ),
   'deferred' => 
   array (
@@ -207,9 +202,9 @@
     'composer' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'hash' => 'Illuminate\\Hashing\\HashServiceProvider',
     'hash.driver' => 'Illuminate\\Hashing\\HashServiceProvider',
-    'mail.manager' => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider',
-    'mailer' => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider',
-    'Illuminate\\Mail\\Markdown' => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider',
+    'mail.manager' => 'Illuminate\\Mail\\MailServiceProvider',
+    'mailer' => 'Illuminate\\Mail\\MailServiceProvider',
+    'Illuminate\\Mail\\Markdown' => 'Illuminate\\Mail\\MailServiceProvider',
     'auth.password' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
     'auth.password.broker' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
     'Illuminate\\Contracts\\Pipeline\\Hub' => 'Illuminate\\Pipeline\\PipelineServiceProvider',
@@ -217,72 +212,4 @@
     'queue' => 'Illuminate\\Queue\\QueueServiceProvider',
     'queue.connection' => 'Illuminate\\Queue\\QueueServiceProvider',
     'queue.failer' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.listener' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.worker' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'redis' => 'Illuminate\\Redis\\RedisServiceProvider',
-    'redis.connection' => 'Illuminate\\Redis\\RedisServiceProvider',
-    'translator' => 'Illuminate\\Translation\\TranslationServiceProvider',
-    'translation.loader' => 'Illuminate\\Translation\\TranslationServiceProvider',
-    'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
-    'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
-    'Illuminate\\Contracts\\Validation\\UncompromisedVerifier' => 'Illuminate\\Validation\\ValidationServiceProvider',
-    'Laravel\\Sail\\Console\\InstallCommand' => 'Laravel\\Sail\\SailServiceProvider',
-    'Laravel\\Sail\\Console\\PublishCommand' => 'Laravel\\Sail\\SailServiceProvider',
-    'Laravel\\Socialite\\Contracts\\Factory' => 'SocialiteProviders\\Manager\\ServiceProvider',
-    'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
-  ),
-  'when' => 
-  array (
-    'Illuminate\\Broadcasting\\BroadcastServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Bus\\BusServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Cache\\CacheServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Hashing\\HashServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Mail\\MailServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Pipeline\\PipelineServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Queue\\QueueServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Redis\\RedisServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Translation\\TranslationServiceProvider' => 
-    array (
-    ),
-    'Illuminate\\Validation\\ValidationServiceProvider' => 
-    array (
-    ),
-    'Laravel\\Sail\\SailServiceProvider' => 
-    array (
-    ),
-    'Laravel\\Socialite\\SocialiteServiceProvider' => 
-    array (
-    ),
-    'Laravel\\Tinker\\TinkerServiceProvider' => 
-    array (
-    ),
-    'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider' => 
-    array (
-    ),
-    'SocialiteProviders\\Manager\\ServiceProvider' => 
-    array (
-    ),
-  ),
-);
+    'queue.listener' => 'Illu
