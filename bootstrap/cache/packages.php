@@ -6,6 +6,13 @@
       0 => 'Inertia\\ServiceProvider',
     ),
   ),
+  'laravel/breeze' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Breeze\\BreezeServiceProvider',
+    ),
+  ),
   'laravel/fortify' => 
   array (
     'providers' => 
@@ -52,17 +59,6 @@
       0 => 'Laravel\\Scout\\ScoutServiceProvider',
     ),
   ),
-  'laravel/socialite' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
-    ),
-  ),
   'laravel/telescope' => 
   array (
     'providers' => 
@@ -75,22 +71,6 @@
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'lloadout/microsoftgraph' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'LLoadout\\Microsoftgraph\\MicrosoftgraphServiceProvider',
-      1 => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphMailServiceProvider',
-      2 => 'LLoadout\\Microsoftgraph\\Providers\\MicrosoftGraphOnedriveServiceProvider',
-    ),
-  ),
-  'mostafaznv/laracache' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Mostafaznv\\LaraCache\\LaraCacheServiceProvider',
     ),
   ),
   'nesbot/carbon' => 
@@ -114,11 +94,15 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'socialiteproviders/manager' => 
+  'santigarcor/laratrust' => 
   array (
     'providers' => 
     array (
-      0 => 'SocialiteProviders\\Manager\\ServiceProvider',
+      0 => 'Laratrust\\LaratrustServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Laratrust' => 'Laratrust\\LaratrustFacade',
     ),
   ),
   'spatie/laravel-ignition' => 
@@ -132,11 +116,11 @@
       'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
-  'spatie/laravel-permission' => 
+  'tightenco/ziggy' => 
   array (
     'providers' => 
     array (
-      0 => 'Spatie\\Permission\\PermissionServiceProvider',
+      0 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     ),
   ),
 );
