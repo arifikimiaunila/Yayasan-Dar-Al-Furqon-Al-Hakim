@@ -1,5 +1,5 @@
 <script setup>
-import {useYear} from '@/js part/presentYear.js'
+import {useYear} from '@/ts part/presentYear.ts'
 import { storeToRefs } from 'pinia'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
