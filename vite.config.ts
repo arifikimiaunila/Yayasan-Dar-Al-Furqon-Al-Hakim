@@ -1,7 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
 import laravel from 'laravel-vite-plugin'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,7 +16,8 @@ export default defineConfig({
           config: { delay: 300 }
         }
       ],
-      detectTls: 'my-app.test'
+      detectTls: 'my-app.test',
+      manifest: true
     }),
     vue({
       template: {
@@ -39,8 +40,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
-		'ziggy-js': path.resolve('vendor/tightenco/ziggy/dist/vue.es.js'),
+    '@':path.resolve('./resources/js'),
+		'ziggy-js': path.resolve('vendor/tightenco/ziggy'),
     }
   }
 })
