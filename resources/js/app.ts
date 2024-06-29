@@ -1,9 +1,9 @@
 import './bootstrap.ts'
 import { createApp, DefineComponent, h } from 'vue'
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createInertiaApp } from '@inertiajs/vue3'
 import createServer from '@inertiajs/vue3/server'
 import Layout from './Layout'
+import { ZiggyVue } from 'ziggy-js'
 
 dom.watch()
 
@@ -13,12 +13,14 @@ createInertiaApp({
   render: renderToString,
     title: (title) => `${title} - ${appName}`,
     resolve: name => {
-        resolvePageComponent(`./Pages/${name}.vue`, 
-        import.meta.glob<DefineComponent>('./Pages/**/*.vue'), page.default.layout = name.startsWith('Public/') ? undefined : Layout)},
+    const pages = import.meta.glob<DefineComponent>('./Pages/**/*.vue', {eager:true})
+    let page = pages['./Pages/${name}.vue']
+    return page
+    },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props)}) 
             .use(plugin)
-            .use(ZiggyVue, Ziggy)
+            .use(ZiggyVue)
             
 .mount(el)
     },
