@@ -3,10 +3,8 @@ import { renderToString } from '@vue/server-renderer'
 import Layout from './Layout'
 import { createInertiaApp } from '@inertiajs/vue3'
 import createServer from '@inertiajs/vue3/server'
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
-import { route as routeFn} from 'ziggy-js'
+import { route } from 'ziggy-js'
 import { Ziggy } from './ziggy.js'
-import {route} from './ziggy.d.ts'
 
 route('home', undefined, undefined, Ziggy)
 
@@ -15,11 +13,18 @@ createServer((page) =>
         page,
         render: renderToString,
         title: (title) => `${title} - ${appName}`,
-        resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue'), page.default.layout = name.startsWith('Public/') ? undefined : Layout),
+resolve: name=>{
+	const pages: object =import.meta.glob('./Pages/**/*.vue', {eager:true})
+	return pages[`./Pages/${name}.vue`]
+}
+		,
         setup({ App, props, plugin }) {
             return createSSRApp({ render: () => h(App, props) })
                 .use(plugin)
-                .use(ZiggyVue, Ziggy)
+               .use(ZiggyVue, {
+                    ...page.props.ziggy,
+                    location: new URL(page.props.ziggy.location)
+                })
         }
     })
 )
