@@ -1,3 +1,9 @@
+<?php
+$collect = router('datayayasan.showcookies');
+foreach($collect as $cookie_name=>$cookie_value){
+setcookie($cookie_name, $cookie_value, time()++(86400*30), "/");
+}
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
