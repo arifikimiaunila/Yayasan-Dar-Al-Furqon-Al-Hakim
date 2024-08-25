@@ -38,7 +38,12 @@ class DataYayasanController extends Controller
      */
     public function show(int $yayasan_id): Response
     {
-        $data_yayasan = data_yayasan::select(['yayasan_id', 'alamat', 'email', 'garis_lintang', 'garis_bujur', 'no_tep1', 'no_tep2', 'no_wa', 'youtube', 'facebook'])->where('yayasan_id', $yayasan_id)->get();
+   if($yayasan_id ==1){
+  $data_yayasan = data_yayasan::select(['yayasan_id', 'alamat', 'email', 'garis_lintang', 'garis_bujur', 'no_tep1', 'no_tep2', 'no_wa'])->where('yayasan_id', $yayasan_id)->get(); 
+}
+else{  
+$data_yayasan = data_yayasan::select(['yayasan_id', 'alamat', 'email', 'garis_lintang', 'garis_bujur', 'no_tep1', 'no_tep2', 'no_wa', 'youtube', 'facebook'])->where('yayasan_id', $yayasan_id)->get();
+}
 		return inertia('data_yayasan/index', [
            'data_yayasan'=>$data_yayasan
         ]);
@@ -58,4 +63,10 @@ $validated=$request->validated();
  if($data_yayasan) {
     return redirect()->route('data_yayasan.edit')->with('message', 'Data_yayasan berhasil diupdate.');
 }
-   }}
+   }
+public function showcookies(): Response
+    {
+        $data_yayasan = data_yayasan::where('yayasan_id', 1)->whereColumn('youtube', 'facebook')->get();
+		return $data_yayasan;
+    }
+}
