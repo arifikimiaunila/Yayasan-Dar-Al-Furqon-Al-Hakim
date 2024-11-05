@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Http\Controllers\DataYayasanController;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Inertia\Inertia;
 use Tighten\Ziggy\Ziggy;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +24,20 @@ use Tighten\Ziggy\Ziggy;
 */
 
 Route::get('/', fn ()=>
-     inertia('Welcome', [
+     inertia('Beranda', [
         'canLogin' => Route::has('login'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ])
 )->name('home');
+
+Route::get('/greeting/{locale}', function (string $locale) {
+    if (! in_array($locale, ['in'])) {
+        abort(400);
+    }
+    App::setLocale($locale);
+    // ...
+});
 
 Route::middleware([
 'auth:sanctum',
@@ -51,7 +60,7 @@ Route::get('pengurus_yayasan/index', fn ()=>(
 [PengurusYayasanController::class, 'index']
 ))->name('pengurus_yayasan.index');
 Route::get('file/index', fn ()=>(
-[FlesController::class, 'index']
+[FlesController::clalss, 'index']
 ))->name('fles.index');
 Route::get('video/{$no_video}', fn (int $no_video)=>(
 [VideoController::class, 'show']
@@ -65,6 +74,9 @@ Route::get('file/{$file_id}/download', fn (int $file_id)=>(
 Route::get('data_yayasan/{$yayasan_id}/show', fn ()=>(
 [DataYayasanController::class, 'show']
 ))->name('datayayasan.show');
+Route::get('data_yayasan/showcookies', fn ()=>(
+[DataYayasanController::class, 'showcookies']
+))->name('datayayasan.showcookies');
 
 
 Route::group(['middleware' => ['role:superadministration|Admin2']], function() {
@@ -141,16 +153,6 @@ Route::controller(PostsController::class)->group(function () {
 Route::get('post/edit', 'edit')->name('post.edit');
 Route::get('post/{$post_id}/choose', 'choose_one')->name('post.choose');
 Route::put('post/{$post_id}/update', 'update')->name('post.update');
-});
-});
-
-Route::group(['middleware' =>['permission:post.edit']], function(){
-Route::controller(PostsController::class)->group(function () {
-Route::get('post/foto_edit', 'foto_edit')->name('foto.edit');
-Route::post('post/{$post_id}/upload_foto', 'upload_foto')->name('foto.upload');
-Route::get('post/{$foto_id}/foto_choose', 'choose_one_foto')->name('foto.choose');
-Route::put('post/{$foto_id}/foto_update', 'update_foto')->name('foto.update');
-Route::delete('post/{$foto_id}/foto_delete', 'delete_foto')->name('foto.delete');
 });
 });
 });
