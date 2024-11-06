@@ -28,12 +28,7 @@ class StorePostRequest extends FormRequest
  'title'   => 'required|min:5|max:50',
             'body' => 'required',
 'published'=>'required|boolean',
-            'published_at'=>'required|after:2024-01-09',
-            'foto_id'=>'required', 
- 'nama_foto'=> 'required|string|min:5|max:50',
-            'deksripsi' => 'required',
-            'gambar'=>'required|image|mimes:jpg|max:2048',
-            'nama_fotografer'=>'required|string|min:5|max:50'
+            'published_at'=>'required|after:2024-01-09'
         ];
     }
 }
