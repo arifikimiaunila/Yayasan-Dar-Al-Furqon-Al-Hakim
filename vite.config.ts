@@ -1,15 +1,18 @@
-import laravel from 'laravel-vite-plugin'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import commonjs from '@rollup/plugin-commonjs';
+import manifestSRI from 'vite-plugin-manifest-sri';
+import ziggy from 'vite-plugin-ziggy';
+import * as path from 'path';
+import  tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: 
-	[
+  plugins: [
     laravel({
-      input: ['resources/css/a354.css', 'resources/js/app.ts'],
-      ssr: 'resources/js/ssr.ts',
+      input: ['resources/css/app.css', 'resources/ts/app.jsx'],
+      ssr: 'resources/ts/ssr.jsx',
       refresh: [
         {
           paths: ['path/to/watch/**'],
@@ -17,31 +20,21 @@ export default defineConfig({
         }
       ],
       detectTls: 'my-app.test',
-      manifest: true
+      buildDirectory: 'build'
     }),
-    vue({
-      template: {
-        transformAssetUrls: {
-          // The Vue plugin will re-write asset URLs, when referenced
-          // in Single File Components, to point to the Laravel web
-          // server. Setting this to `null` allows the Laravel plugin
-          // to instead re-write asset URLs to point to the Vite
-          // server instead.
-          base: null,
-
-          // The Vue plugin will parse absolute URLs and treat them
-          // as absolute paths to files on disk. Setting this to
-          // `false` will leave absolute URLs un-touched so they can
-          // reference assets in the public directory as expected.
-          includeAbsolute: false
-        }
-      }
-    })
-  ],
-  resolve: {
-    alias: {
-    '@':path.resolve('./resources/js'),
-		'ziggy-js': path.resolve('vendor/tightenco/ziggy'),
-    }
+  react(),
+  commonjs(),
+    manifestSRI(),
+  tailwindcss(),
+  // Add your other plugins here, e.g. vue(), vueI18n(),...
+  ziggy()
+],
+resolve: {
+  alias: {
+  '@': path.resolve('/resources/ts')
   }
-})
+},
+ssr: {
+  noExternal: ['@inertiajs/server'],
+},
+});
