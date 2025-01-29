@@ -1,9 +1,20 @@
-import dropface from '@/ts part/SubComponents/Drop Faces.tsx;
-import SingleList from '@/ts part/SubComponents/Single List.tsx;
+import Dropface, { mydropface } from '@/Components/SubComponents/DropFaces';
 import { useRoute } from 'ziggy-js';
+import { Ziggy } from './ziggy.js';
+import { 
+  MegaMenu,
+  MegaMenuDropdownToggle,
+  NavbarBrand,
+  NavbarCollapse,
+  NavbarLink,
+  NavbarToggle
+} from 'flowbite-react';
+import { HiChevronDown } from 'react-icons/hi';
+import React from 'react';
+import LogIn from '@/Components/SubComponents/LogIn';
 
-export default function GuestNav(){
-const route: string = useRoute();
+export function Guestnav() {
+const route = useRoute(Ziggy);
 const yayasans: mydropface[]=[
         {id: 1, link: "'posts.show', 1", title: 'Sejarah Yayasan'},
         {id: 2, link: "'posts.show', 2", title: 'AD/ART Yayasan'},
@@ -22,17 +33,42 @@ const info: mydropface[]=[
         {link: "'fles.index'", title: 'Pengumuman'},
         {link: "'video.index'", title: 'video' }
 ];
-const links: string = "router('home')";
+
 return(
-<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
-<Judul />
-  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-<div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-<SingleList link={links.valueOf()} title="Home"/>
-<dropface mtitle="Yayasan" himpunan=yayasan />
-<dropface mtitle="TK" himpunan=tk />
-<SingleList link="https://smpafbs.sch.id" title="SMP" />
-<SingleList link="https://smaafbs.sch.id" title="SMA" />
- <dropface mtitle="Info" himpunan=info />
-</div> </div></nav>);
-}
+<>
+<MegaMenu>
+  <NavbarBrand href="/">
+    <img alt="" src="/favicon.svg" 
+    className="mr-3 h-6 
+    sm:h-9" />
+    <span className="self-center whitespace-nowrap 
+    text-xl font-semibold dark:text-white">Yayasan Dar Al Furqon Al Hakim</span>
+  </NavbarBrand>
+  <div>
+    <LogIn/>
+  </div>
+  <NavbarToggle />
+  <NavbarCollapse>
+    <NavbarLink link={ route('home') }>Beranda</NavbarLink>
+    <MegaMenuDropdownToggle>
+      Yayasan
+      <HiChevronDown className="ml-2" />
+    </MegaMenuDropdownToggle>
+    <MegaMenuDropdownToggle>
+      TK
+      <HiChevronDown className="ml-2" />
+    </MegaMenuDropdownToggle>
+    <NavbarLink link="https://smpafbs.sch.id">SMP</NavbarLink>
+    <NavbarLink link="https://smaafbs.sch.id">SMA</NavbarLink>
+    <MegaMenuDropdownToggle>
+      Info
+      <HiChevronDown className="ml-2" />
+    </MegaMenuDropdownToggle>
+    </NavbarCollapse>  
+<Dropface himpunan = {yayasans} />
+<Dropface himpunan = {tk} />
+<Dropface himpunan = {info} />
+</MegaMenu>
+</>
+);
+};
