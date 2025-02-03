@@ -14,9 +14,9 @@ interface Props {
 }
 
 export default function ConfirmsPassword({
-  title = 'Konfirmasi Password',
-  content = 'Untuk keamananmu, tolong lanjutkan dengan mengkonfirmasi passwordmu.',
-  button = 'Konfirmasi',
+  title = 'Confirm Password',
+  content = 'For your security, please confirm your password to continue.',
+  button = 'Confirm',
   onConfirm,
   children,
 }: PropsWithChildren<Props>) {
