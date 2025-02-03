@@ -1,6 +1,4 @@
 import Dropface, { mydropface } from '@/Components/SubComponents/DropFaces';
-import { useRoute } from 'ziggy-js';
-import { Ziggy } from './ziggy.js';
 import { 
   MegaMenu,
   MegaMenuDropdownToggle,
@@ -11,10 +9,12 @@ import {
 } from 'flowbite-react';
 import { HiChevronDown } from 'react-icons/hi';
 import React from 'react';
+import useRoute from '@/ts-js part/useRoute';
 import LogIn from '@/Components/SubComponents/LogIn';
+import Logo from "@/assets/Logo.png";
 
 export function Guestnav() {
-const route = useRoute(Ziggy);
+const route = useRoute();
 const yayasans: mydropface[]=[
         {id: 1, link: "'posts.show', 1", title: 'Sejarah Yayasan'},
         {id: 2, link: "'posts.show', 2", title: 'AD/ART Yayasan'},
@@ -38,7 +38,7 @@ return(
 <>
 <MegaMenu>
   <NavbarBrand href="/">
-    <img alt="" src="/favicon.svg" 
+    <img alt="" src={Logo} 
     className="mr-3 h-6 
     sm:h-9" />
     <span className="self-center whitespace-nowrap 
