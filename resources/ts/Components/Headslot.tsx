@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
-import React, { JSXElementConstructor } from 'react';
+import React from 'react';
 import { ReactNode } from 'react';
+import favicon from '@/assets/favicon.ico'
 
 export function mainhead(title: string): ReactNode{
   return 
@@ -8,7 +9,7 @@ export function mainhead(title: string): ReactNode{
   <Head>
     <title>{title}</title>
     <meta head-key="description" name="description" content="Website tentang Yayasan Dar Al Furqon Al Hakim" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href={favicon} />
   </Head>
   </>
 };
