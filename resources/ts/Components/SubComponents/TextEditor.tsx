@@ -8,11 +8,11 @@ import React from 'react';
 
 export function TextEditor(): ReactNode{
 Teditor();
-return 
+return
 <>
-<div className="w-full border border-gray-200 rounded-lg bg-gray-50 
+<div className="w-full border border-gray-200 rounded-lg bg-gray-50
 dark:bg-gray-700 dark:border-gray-600">
-    <div className="px-3 py-2 border-b 
+    <div className="px-3 py-2 border-b
     dark:border-gray-600">
         <Button.Group >
             <Button.Group>
@@ -129,7 +129,7 @@ dark:bg-gray-700 dark:border-gray-600">
                 <Button.Group id="textSizeDropdown" outline>
                     <ul className="space-y-1 text-sm font-medium" aria-labelledby="toggleTextSizeButton">
                         <li>
-                            <Button data-text-size="16px" type="button" outline gradientDuoTone="cyanToBlue">16px (Default) 
+                            <Button data-text-size="16px" type="button" outline gradientDuoTone="cyanToBlue">16px (Default)
                             </Button>
                         </li>
                         <li>
@@ -180,53 +180,53 @@ dark:bg-gray-700 dark:border-gray-600">
                 <Button.Group id="fontFamilyDropdown" outline>
                     <ul className="space-y-1 text-sm font-medium" aria-labelledby="toggleFontFamilyButton">
                         <li>
-                            <Button 
-                            data-font-family="Inter, ui-sans-serif" 
-                            type="button" 
-                            outline 
+                            <Button
+                            data-font-family="Inter, ui-sans-serif"
+                            type="button"
+                            outline
                             gradientDuoTone="cyanToBlue"
                             >
                                 Default
                             </Button>
                         </li>
                         <li>
-                        <Button 
-                        data-font-family="Arial, sans-serif" 
-                        type="button" 
-                        outline 
-                        gradientDuoTone="cyanToBlue" 
+                        <Button
+                        data-font-family="Arial, sans-serif"
+                        type="button"
+                        outline
+                        gradientDuoTone="cyanToBlue"
                         style={{ fontFamily: 'Arial, sans-serif' }}
                         >
                           Arial
                         </Button>
                         </li>
                         <li>
-                        <Button 
-                          data-font-family="'Courier New', monospace" 
-                          type="button" 
-                          outline 
-                          gradientDuoTone="cyanToBlue"  
+                        <Button
+                          data-font-family="'Courier New', monospace"
+                          type="button"
+                          outline
+                          gradientDuoTone="cyanToBlue"
                           style={{ fontFamily: "'Courier New', monospace" }}
                         >
                           Courier New
                         </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="Georgia, serif" 
-                            type="button" 
-                            outline 
-                            gradientDuoTone="cyanToBlue"  
+                            <Button
+                            data-font-family="Georgia, serif"
+                            type="button"
+                            outline
+                            gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "Georgia, serif" }}
                             >
                                 Georgia
                             </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="'Lucida Sans Unicode', sans-serif" 
-                            type="button" 
-                            outline 
+                            <Button
+                            data-font-family="'Lucida Sans Unicode', sans-serif"
+                            type="button"
+                            outline
                             gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "'Lucida Sans Unicode', sans-serif" }}
                             >
@@ -234,32 +234,32 @@ dark:bg-gray-700 dark:border-gray-600">
                             </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="Tahoma, sans-serif" 
-                            type="button" 
-                            outline 
-                            gradientDuoTone="cyanToBlue" 
+                            <Button
+                            data-font-family="Tahoma, sans-serif"
+                            type="button"
+                            outline
+                            gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "Tahoma, sans-serif" }}
                             >
                                 Tahoma
                             </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="'Times New Roman', serif;" 
-                            type="button" 
-                            outline 
-                            gradientDuoTone="cyanToBlue" 
+                            <Button
+                            data-font-family="'Times New Roman', serif;"
+                            type="button"
+                            outline
+                            gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "'Times New Roman', serif" }}
                             >
                                 Times New Roman
                             </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="'Trebuchet MS', sans-serif" 
-                            type="button" 
-                            outline 
+                            <Button
+                            data-font-family="'Trebuchet MS', sans-serif"
+                            type="button"
+                            outline
                             gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "'Trebuchet MS', sans-serif" }}
                             >
@@ -267,10 +267,10 @@ dark:bg-gray-700 dark:border-gray-600">
                             </Button>
                         </li>
                         <li>
-                            <Button 
-                            data-font-family="Verdana, sans-serif" 
-                            type="button" 
-                            outline 
+                            <Button
+                            data-font-family="Verdana, sans-serif"
+                            type="button"
+                            outline
                             gradientDuoTone="cyanToBlue"
                             style={{ fontFamily: "Verdana, sans-serif" }}
                             >
@@ -315,7 +315,7 @@ dark:bg-gray-700 dark:border-gray-600">
             </Button.Group>
             <Tableditor/>
     </Button.Group>
-    
+
     <Button.Group outline>
         <Button id="typographyDropdownButton" data-dropdown-toggle="typographyDropdown" outline gradientDuoTone="purpleToBlue" type="button">
             Format
@@ -329,7 +329,7 @@ dark:bg-gray-700 dark:border-gray-600">
         <Button.Group id="typographyDropdown" outline>
             <ul className="space-y-1 text-sm font-medium" aria-labelledby="typographyDropdownButton">
                 <li>
-                    <Button id="toggleParagraphButton" type="button" outline gradientDuoTone="tealToLime">Paragraf 
+                    <Button id="toggleParagraphButton" type="button" outline gradientDuoTone="tealToLime">Paragraf
                         <div className="space-x-1.5">
                             < Kbd >Cmd</ Kbd>
                             < Kbd >Alt</ Kbd>
@@ -338,7 +338,7 @@ dark:bg-gray-700 dark:border-gray-600">
                     </Button>
                 </li>
                 <li>
-                    <Button data-heading-level="1" type="button" outline gradientDuoTone="pinkToOrange">Heading 1 
+                    <Button data-heading-level="1" type="button" outline gradientDuoTone="pinkToOrange">Heading 1
                         <div className="space-x-1.5">
                             < Kbd >Cmd</ Kbd>
                             < Kbd >Alt</ Kbd>
@@ -347,7 +347,7 @@ dark:bg-gray-700 dark:border-gray-600">
                     </Button>
                 </li>
                 <li>
-                    <Button  data-heading-level="2" type="button" outline gradientDuoTone="pinkToOrange">Heading 2 
+                    <Button  data-heading-level="2" type="button" outline gradientDuoTone="pinkToOrange">Heading 2
                         <div className="space-x-1.5">
                             < Kbd  >Cmd</ Kbd>
                             < Kbd  >Alt</ Kbd>
@@ -440,7 +440,7 @@ dark:bg-gray-700 dark:border-gray-600">
             </svg>
             <span className="sr-only">Buat kutipan</span>
         </Button>
-        <div id="tooltip-blockquote-list" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip 
+        <div id="tooltip-blockquote-list" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip
         dark:bg-gray-700">
             Buat kutipan
             <div className="tooltip-arrow" data-popper-arrow></div>
@@ -452,7 +452,7 @@ dark:bg-gray-700 dark:border-gray-600">
             </svg>
             <span className="sr-only">Buat garis Horizontal</span>
         </Button>
-        <div id="tooltip-hr-list" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip 
+        <div id="tooltip-hr-list" role="tooltip" className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip
         dark:bg-gray-700">
             Buat garis Horizontal
             <div className="tooltip-arrow" data-popper-arrow></div>
