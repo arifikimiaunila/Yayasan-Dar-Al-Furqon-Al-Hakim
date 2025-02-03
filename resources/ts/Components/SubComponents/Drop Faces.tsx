@@ -2,10 +2,7 @@ import { Link } from '@inertiajs/react';
 import { ReactNode } from 'react';
 import React from 'react';
 import { MegaMenu } from 'flowbite-react';
-import { useRoute } from 'ziggy-js';
-import { Ziggy } from '@/ziggy.js';
-
-const route = useRoute(Ziggy);
+import useRoute from '@/ts-js part/useRoute';
 
 export type mydropface={
   id: number;
@@ -14,7 +11,7 @@ export type mydropface={
 }
 
 export default function Dropface(himpunan: mydropface[]): ReactNode{
-const route = useRoute(Ziggy);
+const route = useRoute();
 const listItems: ReactNode=himpunan.map(list=>
 <li key={list.id}>
 <Link href={route(list.link.valueOf())}
