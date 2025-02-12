@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\posts;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use Inertia\Response;
-use App\Models\foto_post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,16 +19,10 @@ return inertia('posts/create');
  /**
   * Store a newly created resource in storage.
   */
-public function store(StorePostRequest $request): RedirectResponse
- {
-  $validated=$request->validated();
-   $posts = posts::create($validated);
-   return redirect()->route('posts.edit')->with('message', 'Postingan berhasil dibuat.');
- }
 
  public function index(Request $request): Response
     {
-      	$titles = posts::select('title');
+      	$titles = post::select('title');
         return inertia('posts/edit', [
         'fles'=>$titles
         ]);
@@ -39,9 +32,9 @@ public function store(StorePostRequest $request): RedirectResponse
      */
     public function show(Request $request, int $post_id): Response
     {
- $post = posts::where('post_id', $post_id)->get();
+ $post = Post::where('post_id', $post_id)->get();
       return inertia('posts/show', [
-'posts' =>$post
+'post' =>$post
       ]);
 }}
 
@@ -50,18 +43,18 @@ public function store(StorePostRequest $request): RedirectResponse
      */
     public function edit(posts $poststable)
     {
-    $postsdata = posts::select('post_id', 'title')->get();
-    $poststable = $postsdata->pluck('title', 'post_id');
+    $postsdata= post::select('post_id', 'title')->get();
+    $post = $postsdata->pluck('title', 'post_id');
     return inertia('posts/edit', [
-            'posts' => $poststable
+            'post' => $post
         ]);
     }
 
 public function choose_one(int $post_id)
     {
-$postdata = posts::select(['post_id', 'title', 'body', 'nama_pembuat','published_at','user_id'])->where('post_id', $post_id)->get();
+$post = post::select(['post_id', 'title', 'body', 'nama_pembuat','published_at','user_id'])->where('post_id', $post_id)->get();
         return inertia('posts/choose_one', [
-           'posts'=>$postdata
+           'post'=>$post
         ]);
     }
 
@@ -83,7 +76,7 @@ $validated=$request->safe()->only([
     'published_at'
         ]);
 }
-   $posts->save($validated);
+   $post->save($validated);
  return redirect()->route('posts.edit')->with('message', 'Post berhasil diupdate.');
     }
 }
