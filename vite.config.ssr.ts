@@ -5,17 +5,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [
     laravel({
-      input: 'resources/ts/app.jsx',
-      ssr: 'resources/ts/ssr.jsx',
+      input: 'resources/stories/ts/app.jsx',
+      ssr: 'resources/stories/ts/ssr.jsx',
       refresh: true,
     }),
     react(),
   ],
-  resolve: {
-    alias: {
-      '@': '/resources/ts',
-    },
-  },
   ssr: {
     noExternal: ['@inertiajs/server'],
   },
