@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +17,7 @@ class posts extends Model
      *
      * @var array<int, string>
      */
-protected $table='posts';
+protected $table='post';
   protected $primaryKey='post_id';
     protected $fillable = [
         'title',
