@@ -25,7 +25,7 @@ protected $stopOnFirstFailure = true;
     {
  $stopOnFirstFailure = true;
         return [
-        'id'=>'required',
+        'user_id'=>'required',
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id
         ];
