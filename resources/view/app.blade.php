@@ -12,7 +12,7 @@ setcookie($cookie_name, $cookie_value, time()++(86400*30), "/");
         <meta name="viewport" content="width=device-width, initial-scale=1">
  		@routes(nonce: Vite::cspNonce())
         @viteReactRefresh
-        @vite(['resources/stories/ts/app.jsx', 'resources/css/index.css', 'resources/stories/ts/Pages/{$page['component']}.tsx'])
+        @vite(['resources/ts/app.jsx', 'resources/css/index.css', 'resources/ts/Pages/{$page['component']}.tsx'])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
