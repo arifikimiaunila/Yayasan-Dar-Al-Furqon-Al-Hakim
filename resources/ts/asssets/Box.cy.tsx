@@ -9,6 +9,7 @@ import { mount } from 'cypress/react';
  */
 describe('Box.tsx', () => {
   it('mounts', () => {
-    mount(<Box/>);
+    mount(<Box props={{}}/>);
   });
+
 });

@@ -1,7 +1,9 @@
 import * as React from "react";
-interface BoxProps extends React.SVGProps<SVGSVGElement> {}
+interface BoxProps extends React.SVGProps<SVGSVGElement> {
+  props: any;
+}
 
-const Box: React.FC<BoxProps> = (props) => (
+const Box: React.FC<BoxProps> = ({props}: BoxProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
