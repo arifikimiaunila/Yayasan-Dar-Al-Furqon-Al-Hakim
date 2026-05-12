@@ -11,7 +11,6 @@ setcookie($cookie_name, $cookie_value, time()++(86400*30), "/");
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
  		@routes(nonce: Vite::cspNonce())
-        @viteReactRefresh
         @vite(['resources/ts/app.tsx', 'resources/css/index.css', 'resources/ts/Pages/{$page['component']}.tsx'])
         @inertiaHead
     </head>
