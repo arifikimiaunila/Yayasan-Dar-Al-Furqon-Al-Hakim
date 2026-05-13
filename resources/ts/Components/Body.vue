@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 // --- 1. IMPORT KOMPONEN PUBLIK & KONTEN ---
 import Beranda from '../Pages/Beranda.vue';
@@ -43,7 +44,8 @@ import TeamShow from '../Pages/Teams/Show.vue';
 import TeamCreate from '../Pages/Teams/Create.vue';
 
 const activeContent = computed(() => {
-    const routeName = route().current();
+    const route = useRoute();
+    const routeName = route.name;
 
     const routesMap: Record<string, any> = {
         // --- Publik & Core ---
@@ -102,8 +104,7 @@ const activeContent = computed(() => {
     };
 
     // Logika pengembalian komponen
-    if (routeName && routesMap[routeName]) {
-        return routesMap[routeName];
+        if (typeof routeName === 'string' && routesMap[routeName]) {
     }
 
     // Fallback: Jika tidak terdaftar, tampilkan Beranda
