@@ -30,6 +30,7 @@
 <script setup>
 import { computed } from 'vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
+import Navigasi from './Navigasi.vue';
 
 // Definisikan pemetaan nama route ke Judul Halaman
 const titleMap = {
