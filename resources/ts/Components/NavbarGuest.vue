@@ -6,28 +6,21 @@
             Beranda
         </Link>
 
-        <!-- Menu Dropdown (Contoh: Media/Video) -->
-        <div class="relative group" ref="dropdownRef">
+       <!-- 🏢 MENU DROPDOWN: YAYASAN -->
+        <div class="relative" ref="yayasanRef">
             <button 
-                @click="isDropdownOpen = !isDropdownOpen"
+                @click="toggleDropdown('yayasan')"
                 class="flex items-center space-x-1 text-gray-600 hover:text-blue-600 focus:outline-none"
-                :class="{'text-blue-600 font-bold': route().current('video.*')}"
+                :class="{'text-blue-600 font-bold': activeDropdown === 'yayasan'}"
             >
                 <span>Yayasan</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" :class="{'rotate-180': isDropdownOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" :class="{'rotate-180': activeDropdown === 'yayasan'}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
- <!-- Dropdown Menu -->
-            <Transition
-                enter-active-class="transition ease-out duration-100"
-                enter-from-class="transform opacity-0 scale-95"
-                enter-to-class="transform opacity-100 scale-100"
-                leave-active-class="transition ease-in duration-75"
-                leave-from-class="transform opacity-100 scale-100"
-                leave-to-class="transform opacity-0 scale-95"
-            >
-                <div v-if="isDropdownOpen" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+
+            <Transition name="dropdown">
+                <div v-if="activeDropdown === 'yayasan'" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                     <div class="py-1">
                         <Link :href="route('posts.show', 1)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
                             Visi
@@ -40,10 +33,7 @@
                         </Link>
                         <Link :href="route('pengurus_yayasan.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
                             👥 Pengurus
-                        </Link>
-                         <Link :href="route('pengurus_yayasan.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            👥 Pengurus
-                        </Link>
+                        </Link>      
                          <Link :href="route('datayayasan.show', 1)" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
                             Lokasi Kantor
                         </Link>
@@ -52,40 +42,28 @@
             </Transition>
         </div>
 
-        <div class="relative group">
+        <!-- 🎬 MENU DROPDOWN: KONTEN -->
+        <div class="relative" ref="kontenRef">
             <button 
-                @click="isDropdownOpen = !isDropdownOpen"
+                @click="toggleDropdown('konten')"
                 class="flex items-center space-x-1 text-gray-600 hover:text-blue-600 focus:outline-none"
-                :class="{'text-blue-600 font-bold': route().current('video.*')}"
+                :class="{'text-blue-600 font-bold': activeDropdown === 'konten'}"
             >
                 <span>Konten</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" :class="{'rotate-180': isDropdownOpen}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform duration-200" :class="{'rotate-180': activeDropdown === 'konten'}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
 
-            <!-- Dropdown Menu -->
-            <Transition
-                enter-active-class="transition ease-out duration-100"
-                enter-from-class="transform opacity-0 scale-95"
-                enter-to-class="transform opacity-100 scale-100"
-                leave-active-class="transition ease-in duration-75"
-                leave-from-class="transform opacity-100 scale-100"
-                leave-to-class="transform opacity-0 scale-95"
-            >
-                <div v-if="isDropdownOpen" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+            <Transition name="dropdown">
+                <div v-if="activeDropdown === 'konten'" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                     <div class="py-1">
-                        <Link :href="route('video.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            📽️ Galeri Video
-                        </Link>
-                        <Link :href="route('fles.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
-                            📁 Arsip File
-                        </Link>
+                        <Link :href="route('video.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">📽️ Galeri Video</Link>
+                        <Link :href="route('fles.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">📁 Arsip File</Link>
                     </div>
                 </div>
             </Transition>
         </div>
-
         <!-- KOTAK LOGIN INVISIBLE (Shortcut: Ctrl + Shift + Y) -->
         <Transition
             enter-active-class="transition ease-out duration-200"
@@ -114,17 +92,20 @@ import { Link } from '@inertiajs/vue3';
 // State untuk Hidden Login
 const isVisible = ref(false);
 
-// State untuk Dropdown
-const isDropdownOpen = ref(false);
-const dropdownRef = ref(null);
+// State untuk mengontrol dropdown mana yang buka (null, 'yayasan', atau 'konten')
+const activeDropdown = ref(null);
 
-// Fungsi Shortcut Keyboard
-const handleShortcut = (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'Y') {
-        e.preventDefault();
-        isVisible.value = !isVisible.value;
+// Template Refs untuk deteksi klik luar
+const yayasanRef = ref(null);
+const kontenRef = ref(null);
+
+// Fungsi Toggle Pintar
+const toggleDropdown = (name) => {
+    if (activeDropdown.value === name) {
+        activeDropdown.value = null; // Tutup jika diklik lagi
+    } else {
+        activeDropdown.value = name; // Buka yang diklik
     }
-};
 
 // Fungsi Klik Luar untuk menutup dropdown
 const handleClickOutside = (event) => {
@@ -143,3 +124,9 @@ onUnmounted(() => {
     window.removeEventListener('click', handleClickOutside);
 });
 </script>
+<style scoped>
+/* Animasi Dropdown yang lebih smooth */
+.dropdown-enter-active { transition: all 0.1s ease-out; }
+.dropdown-leave-active { transition: all 0.075s ease-in; }
+.dropdown-enter-from, .dropdown-leave-to { opacity: 0; transform: scale(0.95); }
+</style>
