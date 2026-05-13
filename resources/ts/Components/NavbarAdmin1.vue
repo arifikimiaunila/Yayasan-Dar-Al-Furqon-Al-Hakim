@@ -41,7 +41,6 @@
                     <div class="py-1">
                         <Link :href="route('pengurus_yayasan.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">📋 Daftar Pengurus</Link>
                         <Link :href="route('pengurus_yayasan.create')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">➕ Tambah Pengurus Baru</Link>
-                        <Link :href="route('pengurus_yayasan.edit')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">✏️ Mode Edit/Pilih</Link>
                     </div>
                 </div>
             </Transition>
@@ -76,27 +75,11 @@
                 <div v-if="openMenu === 'post'" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                     <div class="py-1">
                         <Link :href="route('post.create')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">✍️ Buat Postingan</Link>
-                        <Link :href="route('post.edit')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">📑 Kelola Artikel</Link>
+                        <Link :href="route('post.index')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">📑 Kelola Artikel</Link>
                     </div>
                 </div>
             </Transition>
         </div>
-
-        <!-- Shortcut Invisible Login (Akses Sistem) -->
-        <Transition
-            enter-active-class="transition duration-300 ease-out"
-            enter-from-class="opacity-0 translate-y-2"
-            enter-to-class="opacity-100 translate-y-0"
-        >
-            <div v-if="isSecretVisible" class="flex items-center">
-                <Link 
-                    :href="route('login')" 
-                    class="bg-yellow-400 text-black px-3 py-1 rounded text-[10px] font-black uppercase tracking-widest hover:bg-black hover:text-yellow-400 transition-all shadow-md"
-                >
-                    System Override
-                </Link>
-            </div>
-        </Transition>
     </nav>
 </template>
 
