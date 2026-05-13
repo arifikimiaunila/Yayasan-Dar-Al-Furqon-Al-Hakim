@@ -43,12 +43,13 @@ class fles extends Model
 
     public function toSearchableArray(): array
     {
+        return [
         'file_id'=>$this->file_id,
         'nama_file'=>$this->nama_file,
         'deskripsi'=>$this->deskripsi,
         'gambar'=>$this->gambar,
         'nama_pembuat'=>$this->nama_pembuat,
         'published'=>$this->published,
-        'id'=>$this->id
+        'id'=>$this->id];
     }
 }
