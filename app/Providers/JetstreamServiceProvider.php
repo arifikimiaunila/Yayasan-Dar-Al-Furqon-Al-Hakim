@@ -1,85 +1,96 @@
 <?php
 
-namespace App\Providers;
+namespace App\Http\Controllers;
 
-use App\Models\User; 
-use Illuminate\Support\Facades\Hash;
-use Laravel\Fortify\Actions\AttemptToAuthenticate;
-use Laravel\Fortify\Actions\CanonicalizeUsername;
-use Laravel\Fortify\Actions\EnsureLoginIsNotThrottled;
-use Laravel\Fortify\Actions\PrepareAuthenticatedSession;
-use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
-use Laravel\Fortify\Features;
-use Laravel\Fortify\Fortify;
+use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Actions\Jetstream\DeleteUser;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
+use App\Http\Requests\StorePostRequest;
+use Inertia\Inertia;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 
-class JetstreamServiceProvider extends ServiceProvider
+class PostsController extends Controller 
 {
     /**
-     * Register any application services.
+     * Show the form for creating a new resource.
      */
-    public function register(): void
+    public function create(): Response
     {
-        //
+        return Inertia::render('posts/Create');
     }
 
     /**
-     * Bootstrap any application services.
+     * Display a listing of the resource.
      */
-    public function boot(): void
+    public function index(Request $request): Response
     {
-Fortify::registerView(function () {
- return Inertia::render('Auth/Register');
- });
-Fortify::confirmPasswordsUsing(function (User $user, string $password) {
-        return Hash::check($password, $user->password);
-    });
-        Fortify::authenticateUsing(function (Request $request) {
- $user = User::where('email', $request->email)->first(); 
-if ($user && Hash::check($request->password, $user->password)) {
- return $user;
- }
- });
-Fortify::authenticateThrough(function (Request $request) {
-    return array_filter([
-            config('fortify.limiters.login') ? null : EnsureLoginIsNotThrottled::class,
-            config('fortify.lowercase_usernames') ? CanonicalizeUsername::class : null,
-            Features::enabled(Features::twoFactorAuthentication()) ? RedirectIfTwoFactorAuthenticatable::class : null,
-            AttemptToAuthenticate::class,
-            PrepareAuthenticatedSession::class,
-    ]);
-});
-          $this->configurePermissions();
-
-        Jetstream::deleteUsersUsing(DeleteUser::class);
-        }
-    });
-    }
-
-    /**
-     * Configure the permissions that are available within the application.
-     */
-    protected function configurePermissions(): void
-    {
-        Jetstream::defaultApiTokenPermissions(['post:edit']);
-
-        Jetstream::permissions([
-            'post:edit',
-            'data_yayasan:create',
-            'data_yayasan:edit',
-            'video:create',
-            'video:edit',
-            'video:delete',
-            'file:create',
-            'file:edit',
-            'file:delete',
-            'pengurus_yayasan:create',
-            'pengurus _yayasan:edit',
-            'pengurus_yayasan:delete',
-            'users:edit',
+        // Mengambil semua judul post untuk kebutuhan list
+        $titles = Post::select('post_id', 'title')->get();
+        
+        return Inertia::render('posts/Index', [
+            'files' => $titles
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Post $post): Response
+    {
+        return Inertia::render('posts/Show', [
+            'post' => $post
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Post $post): Response
+    {
+        // Mengambil semua list post untuk drop-down/sidebar jika dibutuhkan di halaman edit
+        $postList = Post::pluck('title', 'post_id');
+
+        return Inertia::render('posts/Edit', [
+            'currentPost' => $post, // Data post yang sedang diedit
+            'postList'    => $postList // Daftar post lainnya
+        ]);
+    }
+
+    /**
+     * Custom route to choose one post.
+     */
+    public function choose_one(Post $post): Response
+    {
+        // Laravel 11/12 modern menggunakan select() atau hanya passing array via only()
+        return Inertia::render('posts/ChooseOne', [
+            'post' => $post->only(['post_id', 'title', 'body', 'nama_pembuat', 'published_at', 'user_id'])
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StorePostRequest $request, Post $post): RedirectResponse
+    {
+        // Di Laravel 12, disarankan mengecek kondisi boolean langsung dari request query/body
+        // Contoh URL: /posts/1?terbit=true atau dikirim via body form data
+        $isTerbit = $request->boolean('terbit');
+
+        if ($isTerbit) {
+            $validated = $request->safe()->only([
+                'published'
+            ]);
+        } else {
+            $validated = $request->safe()->only([
+                'title',
+                'body',
+                'published_at'
+            ]);
+        }
+
+        // Update data langsung pada instance model yang sudah ter-bind
+        $post->update($validated);
+
+        return redirect()->route('posts.index')->with('message', 'Post berhasil diupdate.');
     }
 }
