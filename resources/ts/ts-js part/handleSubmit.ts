@@ -1,26 +1,35 @@
-import { router } from "@inertiajs/react"
+import { router } from '@inertiajs/vue3';
 
-export function handleSubmit(x: number, e: React.FormEvent<HTMLFormElement>, location: string, values: null|any, options: any): void {
+// Mendefinisikan interface untuk opsi custom jika diperlukan, atau pakai type 'any' bawaan Inertia
+export function handleSubmit(
+    x: number, 
+    e: Event, 
+    location: string, 
+    values: any = null, 
+    options: any = {}
+): void {
+    // Mencegah reload halaman bawaan browser submit form
     e.preventDefault();
-    if (x == 0){
+
+    if (x === 0) {
         return router.get(location, values, options);
     }
-    else if (x==1){
+    else if (x === 1) {
         return router.post(location, values, options);
     }
-    else if (x==2){
+    else if (x === 2) {
         return router.put(location, values, options);
     }
-    else if (x==3){
+    else if (x === 3) {
         return router.patch(location, values, options);
     }
-    else if (x==4){
+    else if (x === 4) {
         return router.delete(location, {
-            onBefore: ()=>confirm('Apakah kamu yakin ingin menghapusnya?')
+            ...options, // Tetap menyertakan opsi lain jika ada
+            onBefore: () => confirm('Apakah kamu yakin ingin menghapusnya?')
         });
     }
-    else{
+    else {
         return router.reload(options);
     }
 }
-
