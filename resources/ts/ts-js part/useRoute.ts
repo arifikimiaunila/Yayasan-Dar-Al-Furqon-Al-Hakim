@@ -1,12 +1,19 @@
+import { inject, InjectionKey } from 'vue';
 import { route } from 'ziggy-js';
-import { createContext, useContext } from 'react';
 
-export const RouteContext = createContext<typeof route | null>(null);
+// 1. Definisikan tipe untuk fungsi route Ziggy
+type RouteFunction = typeof route;
 
-export default function useRoute(): typeof route {
-  const fn = useContext(RouteContext);
-  if (!fn) {
-    throw new Error('Route function must be provided');
-  }
-  return fn;
+// 2. Buat InjectionKey khusus dengan tipe data RouteFunction
+export const RouteKey: InjectionKey<RouteFunction> = Symbol('RouteContext');
+
+// 3. Custom Composable useRoute (Ekuivalen dengan custom hook di React)
+export default function useRoute(): RouteFunction {
+    const fn = inject(RouteKey);
+    
+    if (!fn) {
+        throw new Error('Route function must be provided via provide(RouteKey, route)');
+    }
+    
+    return fn;
 }
