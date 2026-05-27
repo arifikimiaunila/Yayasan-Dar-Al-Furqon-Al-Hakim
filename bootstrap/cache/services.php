@@ -212,4 +212,6 @@ return array (
     'queue' => 'Illuminate\\Queue\\QueueServiceProvider',
     'queue.connection' => 'Illuminate\\Queue\\QueueServiceProvider',
     'queue.failer' => 'Illuminate\\Queue\\QueueServiceProvider',
-    'queue.listener' => 'Illu
+    'queue.listener' => 'Illuminate\\Queue\\QueueServiceProvider',
+  )
+);
