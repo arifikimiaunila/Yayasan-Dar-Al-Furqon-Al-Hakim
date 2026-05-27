@@ -1,20 +1,34 @@
-import { Team } from '@/types';
-import { router } from '@inertiajs/core';
+import { router } from '@inertiajs/vue3';
 
-export default function switchToTeam(e: React.FormEvent, team: Team) {
+// Pastikan Anda menyesuaikan path interface/type Team sesuai struktur folder Vue Anda
+interface Team {
+    id: number | string;
+    name: string;
+    // tambahkan properti lain jika ada
+}
+
+/**
+ * Memindahkan tim aktif pengguna (Switch Team)
+ */
+export function switchToTeam(e: Event, team: Team): void {
     e.preventDefault();
+    
     router.put(
-      route('current-team.update'),
-      {
-        team_id: team.id,
-      },
-      {
-        preserveState: false,
-      },
+        route('current-team.update'),
+        {
+            team_id: team.id,
+        },
+        {
+            preserveState: false,
+        },
     );
-  }
+}
 
-export default function logout(e: React.FormEvent) {
+/**
+ * Proses Keluar Aplikasi (Logout)
+ */
+export function logout(e: Event): void {
     e.preventDefault();
+    
     router.post(route('logout'));
-  }
+}
