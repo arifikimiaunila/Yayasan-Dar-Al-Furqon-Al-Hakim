@@ -5,79 +5,89 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
+use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller 
 {
-
- public function create(){
-return inertia('posts/create');
- }
-
- /**
-  * Store a newly created resource in storage.
-  */
-
- public function index(Request $request): Response
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): Response
     {
-      	$titles = post::select('title');
-        return inertia('posts/edit', [
-        'fles'=>$titles
-        ]);
+        return Inertia::render('posts/create');
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function show(Request $request, int $post_id): Response
+    public function index(Request $request): Response
     {
- $post = Post::where('post_id', $post_id)->get();
-      return inertia('posts/show', [
-'post' =>$post
-      ]);
-}}
+        // Mengambil semua judul post
+        $titles = Post::select('title')->get();
+        
+        return Inertia::render('posts/edit', [
+            'files' => $titles
+        ]);
+    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
+     * Menggunakan Route Model Binding (Laravel otomatis mencari berdasarkan ID)
      */
-    public function edit(posts $poststable)
+    public function show(Post $post): Response
     {
-    $postsdata= post::select('post_id', 'title')->get();
-    $post = $postsdata->pluck('title', 'post_id');
-    return inertia('posts/edit', [
+        return Inertia::render('posts/show', [
             'post' => $post
         ]);
     }
 
-public function choose_one(int $post_id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Post $post): Response
     {
-$post = post::select(['post_id', 'title', 'body', 'nama_pembuat','published_at','user_id'])->where('post_id', $post_id)->get();
-        return inertia('posts/choose_one', [
-           'post'=>$post
+        $postsData = Post::select('post_id', 'title')->get();
+        $postList = $postsData->pluck('title', 'post_id');
+
+        return Inertia::render('posts/edit', [
+            'post' => $postList
+        ]);
+    }
+
+    /**
+     * Custom route to choose one post.
+     */
+    public function choose_one(Post $post): Response
+    {
+        // Membatasi kolom yang dikirim ke frontend menggunakan only() milik Eloquent
+        return Inertia::render('posts/choose_one', [
+            'post' => $post->only(['post_id', 'title', 'body', 'nama_pembuat', 'published_at', 'user_id'])
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePostRequest $request, posts $posts, bool $terbit, int $post_id)
+    public function update(StorePostRequest $request, Post $post, bool $terbit): RedirectResponse
     {
-if($terbit = true){
-$validated=$request->safe()->only([
-'post_id'=>$post_id,
-'published'=>$terbit
-]);
-} else {
-$validated=$request->safe()->only([
-    'post_id'=>$post_id,
-	'title',
-    'body',
-    'published_at'
-        ]);
-}
-   $post->save($validated);
- return redirect()->route('posts.edit')->with('message', 'Post berhasil diupdate.');
+        // Validasi kondisi $terbit (menggunakan === untuk boolean check)
+        if ($terbit === true) {
+            $validated = $request->safe()->only([
+                'published'
+            ]);
+        } else {
+            $validated = $request->safe()->only([
+                'title',
+                'body',
+                'published_at'
+            ]);
+        }
+
+        // Langsung update melalui data model yang sudah di-bind
+        $post->update($validated);
+
+        return redirect()->route('posts.edit')->with('message', 'Post berhasil diupdate.');
     }
 }
-
