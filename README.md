@@ -13,3 +13,5 @@ Rules:
 - Return null if !isAdmin
 - Buat test Vitest: render, dropdown toggle, logout
 - Output: src/components/NavbarAdmin.tsx + test
+
+Start now. No Questions
