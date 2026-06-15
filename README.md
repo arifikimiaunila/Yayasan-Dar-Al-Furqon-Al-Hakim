@@ -1,17 +1,16 @@
 This web codes uses php, laravel 12, tailwindcss, vuejs, typescript, & inertiajs.
 
-Migrate NavbarAdmin1.vue ke Next.js React TSX.
-
-Rules:
-- Props: {user, roles}
-- isAdmin = roles.includes('Admin1')||'superadministration'
-- useState untuk openMenu, useRef untuk dropdown
-- useEffect untuk click-outside + cleanup
-- Inertia Link → Next Link
-- route().current → usePathname().startsWith()
-- Tailwind classes copy 100%
-- Return null if !isAdmin
-- Buat test Vitest: render, dropdown toggle, logout
-- Output: src/components/NavbarAdmin.tsx + test
+IGRASI VUE → NEXT.JS TSX
+URUTAN KERJA (JANGAN ACAK)
+NavbarGuest.vue → NavbarGuest.tsx
+NavbarAdmin1.vue → NavbarAdmin.tsx
+Header.vue → Header.tsx
+Footer.vue → Footer.tsx
+Navigasi.vue → Navigasi.tsx
+Body.vue → Body.tsx
+Beranda.vue → Beranda.tsx
+Choose.vue → Choose.tsx
+App.vue → layout.tsx
+NavbarAdmin2.vue → (hapus, duplikat)
 
 Start now. No Questions
