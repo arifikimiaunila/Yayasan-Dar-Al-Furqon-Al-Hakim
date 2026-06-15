@@ -1,7 +1,8 @@
 This web codes uses php, laravel 12, tailwindcss, vuejs, typescript, & inertiajs.
 
-IGRASI VUE → NEXT.JS TSX
+MIGRASI VUE → NEXT.JS TSX
 URUTAN KERJA (JANGAN ACAK)
+
 NavbarGuest.vue → NavbarGuest.tsx
 NavbarAdmin1.vue → NavbarAdmin.tsx
 Header.vue → Header.tsx
