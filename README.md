@@ -26,5 +26,6 @@ NavbarAdmin2.vue → (hapus, duplikat)
 Start now. No Questions
 
 Pemeriksaan dan perbaikan kode-kode PHP-Laravel:
-Periksa dan perbaiki semua kode php-laravel agar sinkron dan bekerja satu sama lain tanpa ada crash, yang ada di semua folder.
-Periksa siste hash dari password dan tingkatkan ke yang berjalan satu arah tanpa bisa diterjemahkan kembali
+*Periksa dan perbaiki semua kode php-laravel agar sinkron dan bekerja satu sama lain tanpa ada crash, yang ada di semua folder.
+*Periksa siste hash dari password dan tingkatkan ke yang berjalan satu arah tanpa bisa diterjemahkan kembali
+*Ubah semua file yang berbentuk ke react ts, periksa sinkronisasi satu dengan lainnya serta dengan inertia js dan semua php-laravel, dan perbaiki jua semua file typescript yang koneksinya dengan file-file lainnya bermasalah
