@@ -1,0 +1,166 @@
+{
+  "_index-BwxT_gyP.js": {
+    "file": "assets/index-BwxT_gyP.js",
+    "name": "index"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-Cd6rYFIf.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/ts/Pages/Beranda.tsx": {
+    "file": "assets/Beranda-vTbJ87Gx.js",
+    "name": "Beranda",
+    "src": "resources/ts/Pages/Beranda.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Dashboard.tsx": {
+    "file": "assets/Dashboard-CbhZUtfz.js",
+    "name": "Dashboard",
+    "src": "resources/ts/Pages/Dashboard.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Post/Choose.tsx": {
+    "file": "assets/Choose-CvyCcCgY.js",
+    "name": "Choose",
+    "src": "resources/ts/Pages/Post/Choose.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Post/Edit.tsx": {
+    "file": "assets/Edit-B-6hp6HU.js",
+    "name": "Edit",
+    "src": "resources/ts/Pages/Post/Edit.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Post/Show.tsx": {
+    "file": "assets/Show-C1n6OajC.js",
+    "name": "Show",
+    "src": "resources/ts/Pages/Post/Show.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Video/Choose.tsx": {
+    "file": "assets/Choose-NjpLzecI.js",
+    "name": "Choose",
+    "src": "resources/ts/Pages/Video/Choose.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Video/Create.tsx": {
+    "file": "assets/Create-DuwNwNqF.js",
+    "name": "Create",
+    "src": "resources/ts/Pages/Video/Create.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Video/Edit.tsx": {
+    "file": "assets/Edit-DUlSs5YF.js",
+    "name": "Edit",
+    "src": "resources/ts/Pages/Video/Edit.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Video/Index.tsx": {
+    "file": "assets/Index-40-zEsjs.js",
+    "name": "Index",
+    "src": "resources/ts/Pages/Video/Index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/Pages/Video/Show.tsx": {
+    "file": "assets/Show-9g7yFmoR.js",
+    "name": "Show",
+    "src": "resources/ts/Pages/Video/Show.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/app.tsx",
+      "_index-BwxT_gyP.js"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  },
+  "resources/ts/app.tsx": {
+    "file": "assets/app-B3klEo6N.js",
+    "name": "app",
+    "src": "resources/ts/app.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/ts/Pages/Beranda.tsx",
+      "resources/ts/Pages/Dashboard.tsx",
+      "resources/ts/Pages/Post/Choose.tsx",
+      "resources/ts/Pages/Post/Edit.tsx",
+      "resources/ts/Pages/Post/Show.tsx",
+      "resources/ts/Pages/Video/Choose.tsx",
+      "resources/ts/Pages/Video/Create.tsx",
+      "resources/ts/Pages/Video/Edit.tsx",
+      "resources/ts/Pages/Video/Index.tsx",
+      "resources/ts/Pages/Video/Show.tsx"
+    ],
+    "css": [
+      "assets/app-Cd6rYFIf.css"
+    ]
+  }
+}
