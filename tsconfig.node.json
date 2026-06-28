@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "target": "ES2022",
     "lib": ["ES2022"],
@@ -21,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.js"]
+  "include": ["vite.config.js", "resources/ts/vitest.config.ts", "resources/ts/ssr.tsx"]
 }
