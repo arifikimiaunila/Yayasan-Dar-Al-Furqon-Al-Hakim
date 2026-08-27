@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
@@ -13,6 +14,11 @@ export default defineConfig({
         tailwindcss(),
         react(),
     ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./resources/ts', import.meta.url)),
+        },
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],
