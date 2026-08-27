@@ -1,0 +1,358 @@
+@import "tailwindcss";
+@import "./custom-base-styles.css";
+@import "./custom-components.css";
+@import "./custom-utilities.css";
+
+@layer base {
+    @supports (all: initial) {}
+
+    html {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    article,
+    aside,
+    details,
+    figcaption,
+    figure,
+    footer,
+    header,
+    main,
+    menu,
+    nav,
+    section {
+        display: block;
+    }
+
+    summary {
+        display: list-item;
+    }
+
+    audio,
+    canvas,
+    progress,
+    video {
+        display: inline-block;
+    }
+
+    progress {
+        vertical-align: baseline;
+    }
+
+    audio:not([controls]) {
+        display: none;
+        height: 0;
+    }
+
+    [hidden],
+    template {
+        display: none;
+    }
+
+    a {
+        background-color: transparent;
+    }
+
+    a:active,
+    a:hover {
+        outline: 0;
+    }
+
+    abbr[title] {
+        border-bottom: none;
+        text-decoration: underline dotted;
+    }
+
+    b,
+    strong {
+        font-weight: 700;
+    }
+
+    dfn {
+        font-style: italic;
+    }
+
+    mark {
+        background-color: #fbbf24;
+        color: #000;
+    }
+
+    small {
+        font-size: 80%;
+    }
+
+    sub,
+    sup {
+        font-size: 75%;
+        line-height: 0;
+        position: relative;
+        vertical-align: baseline;
+    }
+
+    sub {
+        bottom: -0.25em;
+    }
+
+    sup {
+        top: -0.5em;
+    }
+
+    figure {
+        margin: 1em 40px;
+    }
+
+    img {
+        border-style: none;
+    }
+
+    code,
+    kbd,
+    pre,
+    samp {
+        font-family: monospace, monospace;
+        font-size: 1em;
+    }
+
+    hr {
+        box-sizing: content-box;
+        height: 0;
+        overflow: visible;
+    }
+
+    button,
+    input,
+    select,
+    textarea,
+    optgroup {
+        font: inherit;
+        margin: 0;
+    }
+
+    optgroup {
+        font-weight: 700;
+    }
+
+    button,
+    input {
+        overflow: visible;
+    }
+
+    button,
+    select {
+        text-transform: none;
+    }
+
+    button,
+    [type=button],
+    [type=reset],
+    [type=submit] {
+        -webkit-appearance: button;
+        appearance: button;
+    }
+
+    button::-moz-focus-inner,
+    [type=button]::-moz-focus-inner,
+    [type=reset]::-moz-focus-inner,
+    [type=submit]::-moz-focus-inner {
+        border: none;
+        padding: 0;
+    }
+
+    button:-moz-focusring,
+    [type=button]:-moz-focusring,
+    [type=reset]:-moz-focusring,
+    [type=submit]:-moz-focusring {
+        outline: 1px dotted ButtonText;
+    }
+
+    fieldset {
+        border-width: 1px;
+        border-style: solid;
+        border-color: #6b7280;
+        margin: 0 2px;
+        padding: .35em .625em .75em;
+    }
+
+    legend {
+        color: inherit;
+        display: table;
+        max-width: 100%;
+        padding: 0;
+        white-space: normal;
+    }
+
+    textarea {
+        overflow: auto;
+    }
+
+    [type=checkbox],
+    [type=radio] {
+        padding: 0;
+    }
+
+    [type=number]::-webkit-inner-spin-button,
+    [type=number]::-webkit-outer-spin-button {
+        height: auto;
+    }
+
+    [type=search] {
+        -webkit-appearance: textfield;
+        appearance: textfield;
+        outline-offset: -2px;
+    }
+
+    [type=search]::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+
+    ::-webkit-file-upload-button {
+        -webkit-appearance: button;
+        font: inherit;
+    }
+
+    iconify-icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   TipTap Rich Text Editor (TextEditor.tsx)
+   ------------------------------------------------------------------------- */
+.tiptap-content {
+    min-height: 320px;
+    line-height: 1.75;
+}
+
+.tiptap-content:focus {
+    outline: none;
+}
+
+.tiptap-content p {
+    margin: 0.5em 0;
+}
+
+.tiptap-content h1 {
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.67em 0;
+}
+
+.tiptap-content h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.75em 0;
+}
+
+.tiptap-content h3 {
+    font-size: 1.25em;
+    font-weight: 700;
+    margin: 0.83em 0;
+}
+
+.tiptap-content h4,
+.tiptap-content h5,
+.tiptap-content h6 {
+    font-weight: 700;
+    margin: 1em 0;
+}
+
+.tiptap-content ul {
+    list-style: disc;
+    padding-left: 1.5em;
+}
+
+.tiptap-content ol {
+    list-style: decimal;
+    padding-left: 1.5em;
+}
+
+.tiptap-content li {
+    margin: 0.25em 0;
+}
+
+.tiptap-content blockquote {
+    border-left: 3px solid #d1d5db;
+    padding-left: 1em;
+    margin: 1em 0;
+    color: #4b5563;
+}
+
+.tiptap-content pre {
+    background: #f3f4f6;
+    border-radius: 0.5rem;
+    padding: 1em;
+    overflow-x: auto;
+}
+
+.tiptap-content code {
+    background: #f3f4f6;
+    border-radius: 0.25rem;
+    padding: 0.2em 0.4em;
+    font-size: 0.9em;
+}
+
+.tiptap-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.tiptap-content hr {
+    border: none;
+    border-top: 2px solid #e5e7eb;
+    margin: 1.5em 0;
+}
+
+.tiptap-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+.tiptap-content iframe {
+    max-width: 100%;
+    border-radius: 0.5rem;
+}
+
+.tiptap-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+}
+
+.tiptap-content th,
+.tiptap-content td {
+    border: 1px solid #d1d5db;
+    padding: 0.5em 0.75em;
+}
+
+.tiptap-content th {
+    background: #f9fafb;
+    font-weight: 700;
+}
+
+.tiptap-content mark {
+    background: #ffc078;
+}
+
+.tiptap-content a {
+    color: #2563eb;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tiptap-content .selectedCell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(37, 99, 235, 0.1);
+    pointer-events: none;
+}
