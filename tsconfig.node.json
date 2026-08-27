@@ -1,26 +1,27 @@
-{
-  "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "target": "ES2022",
-    "lib": ["ES2022"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
+import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["vite.config.js", "resources/ts/vitest.config.ts", "resources/ts/ssr.tsx"]
-}
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/ts/app.tsx'],
+            ssr: 'resources/ts/ssr.tsx',
+            refresh: true,
+        }),
+        tailwindcss(),
+        react(),
+    ],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./resources/ts', import.meta.url)),
+        },
+    },
+    server: {
+        watch: {
+            ignored: ['**/storage/framework/views/**'],
+        },
+    },
+});
