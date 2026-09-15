@@ -321,6 +321,14 @@ export default function NavbarAdmin() {
           </p>
         </div>
 
+        <a
+          href="/user/profile"
+          className="flex items-center bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1.5 rounded transition-colors"
+          title="Pengaturan akun"
+        >
+          Profil
+        </a>
+
         <button
           onClick={() => logout?.()}
           className="flex items-center bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-700 px-3 py-1.5 rounded transition-colors focus:outline-none"
