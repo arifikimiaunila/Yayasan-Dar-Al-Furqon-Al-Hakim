@@ -15,7 +15,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
-  current_team_id: Nullable<number>;
+  team_id: Nullable<string>;
   profile_photo_path: Nullable<string>;
   profile_photo_url: string;
   two_factor_enabled: boolean;
@@ -90,7 +90,7 @@ export interface Role {
 
 export interface TeamInvitation {
   id: number;
-  team_id: number;
+  team_id: string;
   email: string;
   role: Nullable<string>;
   created_at: DateTime;
