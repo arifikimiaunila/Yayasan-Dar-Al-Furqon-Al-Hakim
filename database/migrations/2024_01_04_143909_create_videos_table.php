@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id('no_video');
-			 $table->string('title', 2048);
-			 $table->string('link', 2048);
-       $table->boolean('published');
+			$table->string('title', 2048);
+			$table->string('link', 2048);
+            $table->text('description')->nullable();
+            $table->boolean('published')->default(false);
 			$table->timestampTz('upload_tanggal', $precision = 0);
-            $table->timestamps();			
+            $table->timestamps();	
+            $table->foreignId('user_id')->constrained('users', 'user_id');		
         });
     }
 

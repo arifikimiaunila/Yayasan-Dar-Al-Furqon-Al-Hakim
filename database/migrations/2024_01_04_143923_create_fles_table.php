@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id('file_id');
             $table->char('nama_file', 100);
 			$table->text('deskripsi');
+            $table->text('link', 1000);
 			$table->string('nama_pembuat', 100);
-      $table->boolean('published');
+            $table->boolean('published')->default(false);
 			$table->timestamps();
         });
     }

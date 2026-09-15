@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('post_id');
             $table->string('title', 100);
             $table->longText('body');
-           $table->boolean('published'); 
-			$table->datetime('published_at')->nullable();
+            $table->boolean('published')->default(false);
+            $table->datetime('published_at')->nullable();
             $table->timestamps();
         });
     }

@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('pengurus_yayasans', function (Blueprint $table) {
             $table->id('id_pengurus');
-			 $table->text('nama');
-			 $table->text('dapukan');
-			 $table->text('alamat')->nullable();
-			 $table->tinyInteger('no_telp')->nullable();
-     $table->text('kategori');
-          $table->boolean('published');   
-             $table->timestamps();
+			$table->text('nama');
+			$table->text('dapukan');
+			$table->text('alamat')->nullable();
+			$table->tinyInteger('no_telp')->nullable();
+            $table->text('kategori');
+            $table->boolean('published');  
+            $table->string('link_foto')->nullable(); 
+            $table->timestamps();
         });
     }
 

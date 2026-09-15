@@ -18,8 +18,8 @@ class LaratrustSetupTeams extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
-    $table->boolean('personal_team');
-$table->foreignuuId('user_id')->index();
+            $table->boolean('personal_team');
+            $table->foreignuuId('user_id')->index();
             $table->timestamps();
         });
 

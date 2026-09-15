@@ -12,10 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_yayasans', function (Blueprint $table) {
-            $table->id('yayasan_id');          $table->text('alamat')->noActionOnUpdate();
+            $table->id('yayasan_id');          
+            $table->text('alamat')->noActionOnUpdate();
             $table->tinytext('email');
             $table->double('garis_lintang', 6, 2)->noActionOnUpdate();
-            $table->double('garis_bujur', 6, 2)->noActionOnUpdate();	$table->unsignedTinyInteger('no_telp1')->noActionOnUpdate();	$table->unsignedTinyInteger('no_telp2')->nullable()->noActionOnUpdate();	$table->unsignedTinyInteger('no_fax')->nullable()->noActionOnUpdate();	$table->unsignedTinyInteger('no_wa')->nullable()->noActionOnUpdate();	$table->tinyText('youtube')->nullable()->noActionOnUpdate();	$table->tinyText('facebook')->nullable()->noActionOnUpdate();
+            $table->double('garis_bujur', 6, 2)->noActionOnUpdate();	
+            $table->unsignedTinyInteger('no_telp1')->noActionOnUpdate();	
+            $table->unsignedTinyInteger('no_telp2')->nullable()->noActionOnUpdate();	
+            $table->unsignedTinyInteger('no_fax')->nullable()->noActionOnUpdate();	
+            $table->unsignedTinyInteger('no_wa')->nullable()->noActionOnUpdate();	
+            $table->tinyText('youtube')->nullable()->noActionOnUpdate();	
+            $table->tinyText('facebook')->nullable()->noActionOnUpdate();
 		});
     }
 

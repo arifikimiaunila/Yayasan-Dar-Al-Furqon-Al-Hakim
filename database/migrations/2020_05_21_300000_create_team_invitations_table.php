@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('team_invitations', function (Blueprint $table) {
             $table->id();
-$table->foreignUuid('team_id')->nullable();
+            $table->foreignUuid('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('email');
             $table->string('role')->nullable();
             $table->timestamps();
