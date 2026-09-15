@@ -25,6 +25,7 @@ class StoreVideoRequest extends FormRequest
         return [
             'title' => 'required|string|min:5|max:255',
             'link' => 'required|string|min:3|max:2048',
+            'description' => 'nullable|string|max:1000',
             'published' => 'required|boolean',
             'upload_tanggal' => 'required|date',
         ];
@@ -34,12 +35,14 @@ class StoreVideoRequest extends FormRequest
     {
         $title = $this->input('title', $this->input('judul'));
         $link = $this->input('link', $this->input('youtube_id', $this->input('youtube_link')));
+        $description = $this->input('description', $this->input('deskripsi'));
         $published = $this->input('published', $this->input('is_published', false));
         $uploadTanggal = $this->input('upload_tanggal', $this->input('tanggal_upload'));
 
         $this->merge([
             'title' => $title,
             'link' => $link,
+            'description' => $description,
             'published' => $published,
             'upload_tanggal' => $uploadTanggal,
         ]);
