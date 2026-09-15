@@ -4,11 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
-use App\Models\User;
 use App\Models\Role;
-use Illuminate\Support\Collection;
 
-        class PermissionSeeder extends Seeder {
+class PermissionSeeder extends Seeder {
 public function run(): void {
  //Some initially role configuration
 
@@ -19,13 +17,13 @@ $roles=array(
 'Admin mengatur postingan dan pengurus yayasan.'
 ],
 [
-'admim2',
+'admin2',
 'Admin 2',
 'Admin mengatur file dan video.'
 ],
 [
-'superadministrator',
-'Super Admin1',
+'superadmin',
+'Super Admin',
 'Admin pengawas.'
 ]
 );
@@ -38,7 +36,7 @@ Role::create($x);
 };
 
 $permissions= array([
- 'video.create',
+'video.create',
 'Buat video',
 'Buat video baru.'
 ],
@@ -46,6 +44,21 @@ $permissions= array([
 'video.edit',
 'Edit video',
 'Perbarui data video.'
+],
+[
+'video.store',
+'Simpan video',
+'Simpan video baru.'
+],
+[
+'video.choose',
+'Pilih video',
+'Pilih video tertentu.'
+],
+[
+'video.update',
+'Update video',
+'Simpan pembaruan video yang ada'
 ],
 [
 'video.delete',
@@ -58,12 +71,27 @@ $permissions= array([
 'Buat file baru'
 ],
 [
+'file.store',
+'Simpan file',
+'Simpan file baru'
+],
+[
+'file.choose',
+'Pilih file',
+'Pilih file tertentu'
+],
+[
 'file.edit',
 'Edit file',
 'Perbarui file yang ada'
 ],
 [
-'file.delete',
+'file.update',
+'Update file',
+'Simpan pembaruan file yang ada'
+],
+[
+'file.destroy',
 'Hapus file',
 'Hapus file yang ada.'
 ],
@@ -83,9 +111,39 @@ $permissions= array([
 'Hapus data pengurus yayasan.'
 ],
 [
+'pengurus_yayasan.update',
+'Update Pengurus Yayasan',
+'Simpan pembaruan data pengurus yayasan.'
+],
+[
+'pengurus_yayasan.choose',
+'Pilih Pengurus Yayasan',
+'Pilih pengurus yayasan tertentu.'
+],
+[
+'pengurus_yayasan.store',
+'Simpan Pengurus Yayasan',
+'Simpan data pengurus yayasan baru.'
+],
+[
  'post.create',
 'Buat post',
 'Buat post baru.'
+],
+[
+'post.store',
+'Simpan post',
+'Simpan post baru.'
+],
+[
+ 'post.choose',
+'Pilih post',
+'Pilih post tertentu.'
+],
+[
+ 'post.update',
+'Update post',
+'Simpan pembaruan post yang ada'
 ],
 [
 'post.edit', 
@@ -98,15 +156,36 @@ $permissions= array([
 'Buat data yayasan baru.'
 ],
 [
- 'data_yayasan.edit',
+'data_yayasan.store',
+'Simpan Data Yayasan',
+'Simpan data yayasan baru.'
+],
+[
+'data_yayasan.edit',
 'Edit Data Yayasan',
 'Perbarui data yayasan.'
 ],
 [
-'users.edit',
-'Edit Pengguna',
+'data_yayasan.update',
+'Update Data Yayasan',
+'Simpan pembaruan data yayasan.'
+],
+ [
+'user.show',
+'Lihat Pengguna',
+'Lihat data para admin.'
+ ],
+ [
+'user.index',
+'Perbarui Pengguna',
 'Perbarui data para admin.'
- ]);
+ ],
+ [
+'user.delete',
+'Hapus Pengguna',
+'Hapus data para admin.'
+ ]
+ );
 
 foreach ($permissions as $permission) {
 $kunci=collect(['name', 'display_name', 'description']);
@@ -120,18 +199,30 @@ $admin1->givePermissions([
 'pengurus_yayasan.create', 
 'pengurus_yayasan.edit', 
 'pengurus_yayasan.delete',
+'pengurus_yayasan.update',
+'pengurus_yayasan.store',
+'pengurus_yayasan.choose',
 'post.create',
-'post.edit'
+'post.edit',
+'post.store',
+'post.choose',
+'post.update',
 ]);
 
 $admin2 = Role::find(2);
 $admin2->givePermissions([
 'video.create',
 'video.edit', 
+'video.store',
+'video.update',
 'video.delete',
+'video.choose',
 'file.create', 
 'file.edit',
-'file.delete'
+'file.store',
+'file.choose',
+'file.update',
+'file.destroy',
 ]);
 
 $role3=Role::find(3);
@@ -139,17 +230,38 @@ $role3->givePermissions([
 'video.create',
 'video.edit', 
 'video.delete',
+'video.store',
+'video.update',
+'video.choose',
 'file.create', 
 'file.edit',
-'file.delete',
+'file.store',
+'file.choose',
+'file.update',
+'file.destroy',
 'pengurus_yayasan.create', 
 'pengurus_yayasan.edit', 
 'pengurus_yayasan.delete',
- 'post.create',
-'post.edit', 
+'pengurus_yayasan.update',
+'pengurus_yayasan.store',
+'pengurus_yayasan.choose',
+'post.create',
+'post.edit',
+'post.store',
+'post.choose',
+'post.update', 
 'data_yayasan.create',
- 'data_yayasan.edit',
-         'users.edit'
+'data_yayasan.edit',
+'data_yayasan.store',
+'data_yayasan.update',
+'user.index',
+'user.show',
+'user.delete',
+'team.index',
+'team.role_store',
+'team.role_update',
+'team.show',
+'team.delete'
 ]);
 }
 }
