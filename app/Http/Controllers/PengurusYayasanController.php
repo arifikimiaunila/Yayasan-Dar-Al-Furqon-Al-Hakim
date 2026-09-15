@@ -4,62 +4,160 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePengurusYayasanRequest;
 use App\Models\pengurus_yayasans;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PengurusYayasanController extends Controller
 {
-    public function index(): JsonResponse
+    public function index()
     {
-        return response()->json(pengurus_yayasans::query()->latest('id_pengurus')->paginate(20));
+        $pengurus = pengurus_yayasans::query()->latest('id_pengurus')->paginate(20);
+
+        return Inertia::render('Pengurus/Index', [
+            'pengurus' => $pengurus,
+        ]);
     }
 
-    public function show(string $kategori): JsonResponse
+   public function show(Request $request, int $id_pengurus): Response
     {
-        $data = pengurus_yayasans::query()->where('kategori', $kategori)->get();
+    $pengurus = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
 
-        return response()->json($data);
+    // Jika ada query string download=1, maka kirim file foto
+    if ($request->has('download')) {
+        $fileName = $pengurus->link_foto;
+        $filePath = resource_path("ts/photos/{$fileName}");
+
+        if (!file_exists($filePath)) {
+            abort(404, 'Foto tidak ditemukan.');
+        }
+
+        return response()->download($filePath, $fileName, [
+            'Content-Type' => mime_content_type($filePath),
+        ]);
     }
 
-    public function choose_one(int $id_pengurus): JsonResponse
-    {
-        $data = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
-
-        return response()->json($data);
+    // Default: render halaman Inertia
+    return inertia('Pengurus/Show', [
+        'pengurus' => $pengurus,
+        'link_foto' => route('pengurus.show', ['id_pengurus' => $id_pengurus, 'download' => 1]),
+    ]);
     }
 
-    public function create(): RedirectResponse
+   public function choose_one(int $id_pengurus): Response
+{
+    $data = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
+
+    return Inertia::render('Pengurus/Choose', [
+        'pengurus' => $data,
+    ]);
+}
+
+    public function create(): Response
     {
-        return redirect()->route('home');
+    return Inertia::render('Pengurus/Create');
     }
 
-    public function store(StorePengurusYayasanRequest $request): RedirectResponse
-    {
-        pengurus_yayasans::create($request->validated());
+   public function store(StorePengurusYayasanRequest $request): RedirectResponse
+{
+    // Ambil semua data validasi
+    $data = $request->validated();
 
-        return redirect()->route('home')->with('message', 'Pengurus yayasan berhasil dibuat.');
+    // Jika ada file foto diupload
+    if ($request->hasFile('link_foto')) {
+        $file = $request->file('link_foto');
+
+        // Ambil nama file dari input admin (misalnya field 'nama_file')
+        // Jika tidak ada, gunakan nama asli file upload
+        $fileName = $request->input('nama_file') 
+            ? $request->input('nama_file') . '.' . $file->getClientOriginalExtension()
+            : $file->getClientOriginalName();
+
+        // Simpan ke folder resources/ts/photos
+        $file->move(resource_path('ts/photos'), $fileName);
+
+        // Simpan nama file ke kolom link_foto
+        $data['link_foto'] = $fileName;
     }
 
-    public function edit(): JsonResponse
-    {
-        return response()->json(
-            pengurus_yayasans::query()->select(['id_pengurus', 'nama'])->latest('id_pengurus')->get()
-        );
+    // Buat data pengurus yayasan
+    pengurus_yayasans::create($data);
+
+    return redirect()->route('home')->with('message', 'Pengurus yayasan berhasil dibuat.');
     }
 
-    public function update(StorePengurusYayasanRequest $request, int $id_pengurus): RedirectResponse
-    {
-        $data = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
-        $data->update($request->validated());
+    public function edit(): Response
+{
+    $pengurus = pengurus_yayasans::query()
+        ->select(['id_pengurus', 'nama'])
+        ->latest('id_pengurus')
+        ->get();
 
-        return redirect()->route('home')->with('message', 'Pengurus yayasan berhasil diupdate.');
+    return Inertia::render('Pengurus/Edit', [
+        'pengurus' => $pengurus,
+    ]);
+}
+
+   public function update(StorePengurusYayasanRequest $request, int $id_pengurus): RedirectResponse
+{
+    $pengurus = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
+    $data = $request->validated();
+
+    // Jika ada file foto baru diupload
+    if ($request->hasFile('link_foto')) {
+        $file = $request->file('link_foto');
+
+        // Hapus file foto lama jika ada
+        if ($pengurus->link_foto) {
+            $oldFilePath = resource_path("ts/photos/{$pengurus->link_foto}");
+            if (File::exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+        }
+
+        // Gunakan nama file dari input admin (misalnya field 'nama_file'), jika tidak ada pakai nama asli
+        $fileName = $request->input('nama_file')
+            ? $request->input('nama_file') . '.' . $file->getClientOriginalExtension()
+            : $file->getClientOriginalName();
+
+        // Simpan file baru ke folder resources/ts/photos
+        $file->move(resource_path('ts/photos'), $fileName);
+
+        // Update kolom link_foto dengan nama file baru
+        $data['link_foto'] = $fileName;
+    } elseif ($request->boolean('hapus_foto')) {
+        // Jika admin memilih untuk menghapus foto tanpa mengganti
+        if ($pengurus->link_foto) {
+            $oldFilePath = resource_path("ts/photos/{$pengurus->link_foto}");
+            if (File::exists($oldFilePath)) {
+                File::delete($oldFilePath);
+            }
+        }
+        $data['link_foto'] = null;
+    }
+
+    // Update data pengurus yayasan
+    $pengurus->update($data);
+
+    return redirect()->route('pengurus_yayasan.show', $id_pengurus)->with('message', 'Pengurus yayasan berhasil diupdate.');
     }
 
     public function destroy(int $id_pengurus): RedirectResponse
-    {
-        $data = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
-        $data->delete();
+{
+    $pengurus = pengurus_yayasans::query()->where('id_pengurus', $id_pengurus)->firstOrFail();
 
-        return redirect()->route('home')->with('message', 'Pengurus yayasan berhasil dihapus.');
+    // Jika ada file foto, hapus dari folder resources/ts/photos
+    if ($pengurus->link_foto) {
+        $filePath = resource_path("ts/photos/{$pengurus->link_foto}");
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
     }
+
+    // Hapus data pengurus dari database
+    $pengurus->delete();
+
+    return redirect()->route('home')->with('message', 'Pengurus yayasan berhasil dihapus beserta file foto terkait.');
+}
 }

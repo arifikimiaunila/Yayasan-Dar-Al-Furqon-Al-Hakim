@@ -16,7 +16,7 @@ class VideoController extends Controller
             ->latest('no_video')
             ->get()
             ->map(fn (videos $video) => [
-                'no_video' => $video->no_video,
+                'id' => $video->no_video,
                 'judul' => $video->title,
                 'youtube_id' => $this->extractYoutubeId($video->link),
                 'is_published' => (bool) $video->published,
@@ -45,10 +45,10 @@ class VideoController extends Controller
 
         return inertia('Video/Show', [
             'video' => [
-                'no_video' => $video->no_video,
+                'id' => $video->no_video,
                 'judul' => $video->title,
                 'youtube_id' => $this->extractYoutubeId($video->link),
-                'deskripsi' => null,
+                'deskripsi' => $video->description,
                 'created_at' => $video->upload_tanggal ?? $video->created_at,
             ],
         ]);
@@ -57,16 +57,14 @@ class VideoController extends Controller
     public function edit(): Response
     {
         $videos = videos::query()
-            ->select(['no_video', 'title', 'link', 'published', 'upload_tanggal', 'created_at'])
+            ->select(['no_video', 'title', 'link', 'description', 'published', 'upload_tanggal', 'created_at'])
             ->latest('no_video')
             ->get()
             ->map(fn (videos $video) => [
                 'id' => $video->no_video,
-                'no_video' => $video->no_video,
                 'judul' => $video->title,
                 'youtube_id' => $this->extractYoutubeId($video->link),
                 'is_published' => (bool) $video->published,
-                'uploader_name' => 'Admin',
                 'created_at' => $video->upload_tanggal ?? $video->created_at,
             ])
             ->values();
@@ -80,10 +78,10 @@ class VideoController extends Controller
 
         return inertia('Video/Choose', [
             'video' => [
-                'no_video' => $video->no_video,
+                'id' => $video->no_video,
                 'judul' => $video->title,
                 'youtube_id' => $this->extractYoutubeId($video->link),
-                'deskripsi' => null,
+                'deskripsi' => $video->description,
                 'is_published' => (bool) $video->published,
                 'tanggal_upload' => optional($video->upload_tanggal)->format('Y-m-d') ?? now()->toDateString(),
             ],
@@ -95,7 +93,7 @@ class VideoController extends Controller
         $video = videos::query()->where('no_video', $no_video)->firstOrFail();
         $video->update($request->validated());
 
-        return redirect()->route('video.edit')->with('message', 'Video berhasil diupdate.');
+        return redirect()->route('video.show', $no_video)->with('message', 'Video berhasil diupdate.');
     }
 
     public function destroy(int $no_video): RedirectResponse
@@ -103,7 +101,7 @@ class VideoController extends Controller
         $video = videos::query()->where('no_video', $no_video)->firstOrFail();
         $video->delete();
 
-        return redirect()->route('video.edit')->with('message', 'Video berhasil dihapus.');
+        return redirect()->route('home')->with('message', 'Video berhasil dihapus.');
     }
 
     private function extractYoutubeId(string $value): string

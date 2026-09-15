@@ -6,19 +6,17 @@ use App\Http\Requests\StoreDataYayasanRequest;
 use App\Models\data_yayasan;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class DataYayasanController extends Controller
 {
-    public function index(): JsonResponse
+    public function create(): Response
     {
-        return response()->json(data_yayasan::query()->latest('yayasan_id')->paginate(20));
+        return Inertia::render('Data_Yayasan/Create');
     }
-
-    public function create(): RedirectResponse
-    {
-        return redirect()->route('home');
-    }
-
+    // Simpan data baru
     public function store(StoreDataYayasanRequest $request): RedirectResponse
     {
         data_yayasan::create($request->validated());
@@ -26,26 +24,33 @@ class DataYayasanController extends Controller
         return redirect()->route('home')->with('message', 'Data yayasan berhasil dibuat.');
     }
 
-    public function show(int $yayasan_id): JsonResponse
+    // Tampilkan detail data yayasan
+    public function show(int $yayasan_id): Response
     {
-        $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
+    $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
 
-        return response()->json($data);
+    return Inertia::render('Data_Yayasan/Show', [
+        'yayasan' => $data,
+    ]);
     }
 
-    public function choose_one(int $yayasan_id): JsonResponse
+    // Form edit data yayasan
+    public function edit(int $yayasan_id): Response
     {
-        $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
+    $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
 
-        return response()->json($data);
+    return Inertia::render('Data_Yayasan/Edit', [
+        'yayasan' => $data,
+    ]);
     }
 
+    // Update data yayasan
     public function update(StoreDataYayasanRequest $request, int $yayasan_id): RedirectResponse
     {
         $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
         $data->update($request->validated());
 
-        return redirect()->route('home')->with('message', 'Data yayasan berhasil diupdate.');
+        return redirect()->route('data_yayasan.show', 1)->with('message', 'Data yayasan berhasil diupdate.');
     }
 
     public function showcookies(): JsonResponse

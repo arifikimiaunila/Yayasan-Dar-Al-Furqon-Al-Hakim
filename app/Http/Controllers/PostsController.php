@@ -51,7 +51,6 @@ class PostsController extends Controller
                 'body' => $post->body,
                 'published' => (bool) $post->published,
                 'published_at' => $post->published_at,
-                'author_name' => 'Admin',
             ],
         ]);
     }
@@ -76,14 +75,6 @@ class PostsController extends Controller
         $post = posts::query()->where('post_id', $post_id)->firstOrFail();
         $post->update($request->validated());
 
-        return redirect()->route('post.edit')->with('message', 'Post berhasil diupdate.');
-    }
-
-    public function destroy(int $post_id): RedirectResponse
-    {
-        $post = posts::query()->where('post_id', $post_id)->firstOrFail();
-        $post->delete();
-
-        return redirect()->route('post.edit')->with('message', 'Post berhasil dihapus.');
+        return redirect()->route('post.show', $post_id)->with('message', 'Post berhasil diupdate.');
     }
 }
