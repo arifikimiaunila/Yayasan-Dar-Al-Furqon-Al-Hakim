@@ -21,7 +21,11 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        Fortify::createUsersUsing(\App\Actions\Fortify\CreateNewUser::class);
+
+        // Aktifkan fitur email verification
+        Fortify::ignoreRoutes(); // jika kamu pakai Inertia/React untuk UI
+        $this->configureFeatures();
     }
 
     /**
@@ -29,25 +33,17 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Fortify::createUsersUsing(CreateNewUser::class);
-        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
-        Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
-        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-
-        Fortify::loginView(fn () => Inertia::render('Auth/Login'));
-        Fortify::registerView(fn () => Inertia::render('Auth/Register'));
-        Fortify::requestPasswordResetLinkView(fn () => Inertia::render('Auth/ForgotPassword'));
-        Fortify::resetPasswordView(fn ($request) => Inertia::render('Auth/ResetPassword', [
-            'token' => $request->route('token'),
-            'email' => $request->query('email'),
-        ]));
-        Fortify::verifyEmailView(fn () => Inertia::render('Auth/VerifyEmail'));
-        Fortify::confirmPasswordView(fn () => Inertia::render('Auth/ConfirmPassword'));
-        Fortify::twoFactorChallengeView(fn () => Inertia::render('Auth/TwoFactorChallenge'));
+        Fortify::features([
+            Features::registration(),
+            Features::resetPasswords(),
+            Features::emailVerification(), // ← ini yang penting
+            Features::updateProfileInformation(),
+            Features::updatePasswords(),
+            Features::twoFactorAuthentication(),
+        ]);
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
-
             return Limit::perMinute(5)->by($throttleKey);
         });
 
