@@ -80,4 +80,9 @@ class CheckRoleOrPermission extends Middleware
 
         return $next($request);
     }
+
+    public function handleRole($user)
+    {
+    return $user->role; // atau logika lain sesuai database
+    }
 }
