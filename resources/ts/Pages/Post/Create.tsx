@@ -1,6 +1,6 @@
 import { Link, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
-import TextEditor from '../../Components/TextEditor';
+import TextEditor from '@/Components/TextEditor';
 
 interface PostFormData {
     title: string;
