@@ -1,5 +1,6 @@
 import React from 'react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface FileData {
   file_id: number;
@@ -20,6 +21,7 @@ const FilesTable: React.FC<Props> = ({ files }) => {
 
   return (
     <App>
+      <Head><title>Manajemen File</title></Head>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse">
           <tbody>

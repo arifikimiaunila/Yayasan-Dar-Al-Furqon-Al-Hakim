@@ -1,5 +1,6 @@
 import React from 'react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface FileData {
   file_id: number;
@@ -17,6 +18,7 @@ interface Props {
 const FilesList: React.FC<Props> = ({ files }) => {
   return (
     <App>
+      <Head><title>Detail File</title></Head>
       <div className="max-w-2xl mx-auto p-6">
         <ul className="space-y-4">
           {files.map((file) => (
