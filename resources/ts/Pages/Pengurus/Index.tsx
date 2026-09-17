@@ -1,6 +1,7 @@
 import { route } from 'ziggy-js';
 import { Link } from '@inertiajs/react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface Pengurus {
   id_pengurus: number;
@@ -20,8 +21,9 @@ interface Props {
 export default function Index({ pengurus }: Props) {
   return (
     <App>
+      <Head><title>Daftar Pengurus</title></Head>
       <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Pengurus Yayasan</h2>
+        <h2 className="text-2xl font-bold mb-2">Pengurus Yayasan</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 rounded-lg shadow-sm">
             <thead className="bg-gray-100">

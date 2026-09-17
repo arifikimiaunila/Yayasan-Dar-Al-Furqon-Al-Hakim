@@ -1,4 +1,5 @@
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface Pengurus {
   id_pengurus: number;
@@ -18,7 +19,8 @@ interface Props {
 export default function ShowPengurus({ pengurus }: Props) {
   return (
     <App>
-      <h2 className="text-2xl font-bold mb-6">Data Pengurus</h2>
+      <Head><title>Detail Pengurus</title></Head>
+      <h2 className="text-2xl font-bold mb-2">Data Pengurus</h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full">
