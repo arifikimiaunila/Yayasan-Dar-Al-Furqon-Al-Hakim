@@ -1,17 +1,19 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\ValidationException;
 use Tighten\Ziggy\Ziggy;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 Route::get('/ziggy', fn () => response()->json(new Ziggy));
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => ['required', 'email'],
@@ -34,7 +36,8 @@ Route::post('/sanctum/token', function (Request $request) {
         'token_type' => 'Bearer',
         'abilities' => $token->accessToken->abilities,
     ]);
-})->middleware('throttle:sanctum-token');
+})->middleware('sanctum-token');
+
 
 Route::group(['middleware' => ['ability:superadministrator, user.edit, require_all']], function () {
     Route::controller(UserController::class)->group(function () {
