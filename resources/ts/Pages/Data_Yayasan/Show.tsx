@@ -1,5 +1,6 @@
 import React from 'react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface Yayasan {
   alamat: string;
@@ -21,6 +22,7 @@ interface Props {
 const YayasanDetail: React.FC<Props> = ({ data }) => {
   return (
     <App>
+      <Head><title>Profil Yayasan</title></Head>
       <div className="max-w-3xl mx-auto p-6 space-y-4">
         {/* Alamat */}
         <div>
