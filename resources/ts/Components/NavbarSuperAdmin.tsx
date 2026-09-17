@@ -1,7 +1,5 @@
 import { route } from 'ziggy-js';
 import React, { useState, useRef, useEffect } from "react";
-import Login from '../Pages/Auth/Login';
-import Register from '@/Pages/Auth/Register';
 
 interface MenuItem {
   title: string;
@@ -10,30 +8,20 @@ interface MenuItem {
 }
 
 const navigationData: MenuItem[] = [
-  { title: "Beranda", href: route('home') },
-  {
-    title: "Yayasan",
-    subItems: [
-      { title: "Profil", href: route('post.show', { id: 1 }) },
-      { title: "Sejarah", href: route('post.show', { id: 2 }) },
-      { title: "Visi", href: route('post.show', { id: 3 }) },
-      { title: "Misi", href: route('post.show', { id: 4 }) },
-      { title: "Struktur Organisasi", href: route('pengurus_yayasan.index') },
-    ]
-  },
-  { title: "SMP AFBS", href: "https://smpafbs.sch.id/" },
-  { title: "SMA AFBS", href: "https://smaafbs.sch.id/" },
-  {
-    title: "Media",
-    subItems: [
-      { title: "Info", href: route('files.index') },
-      { title: "Video", href: route('video.index') },
-    ]
-  },
-  { title: "Kontak", href: route('data_yayasan.show', 1) }
+  { title: "Buat Pengurus Yayasan", href: route('pengurus_yayasan.create') },
+  { title: "Edit Pengurus Yayasan", href: route('pengurus_yayasan.edit') },
+  { title: "Buat Post", href: route('post.create') },
+  { title: "Edit Post", href: route('post.edit') },
+  { title: "Buat Video", href: route('video.create') },
+  { title: "Edit Video", href: route('video.edit') },
+  { title: "Buat File", href: route('file.create') },
+  { title: "Edit File", href: route('file.edit') },
+  { title: "Buat Data Yayasan", href: route('data_yayasan.create') },
+  { title: "Edit Data Yayasan", href: route('data_yayasan.edit') },
+  { title: "Edit Admin", href: route('users.index') }
 ];
 
-export const NavbarGuest: React.FC = () => {
+export const NavbarSuperAdmin: React.FC = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -88,11 +76,6 @@ export const NavbarGuest: React.FC = () => {
           </li>
         ))}
       </ul>
-      {/* Right Section: Navigation + Login */}
-      <div className="flex items-center space-x-4">
-      <Login /> {/* 👉 login form tersembunyi, muncul dengan Ctrl+M */}
-      <Register />
-      </div>
     </nav>
   );
 };
