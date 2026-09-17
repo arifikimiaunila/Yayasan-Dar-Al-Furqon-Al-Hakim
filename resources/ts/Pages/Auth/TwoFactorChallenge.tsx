@@ -1,6 +1,7 @@
-import { FormEvent } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import App2 from '@/Layouts/App2';    
+import BlueButton from '@/Components/Parts/BlueButton';
 
 export default function TwoFactorChallenge() {
     const { data, setData, post, processing, errors } = useForm({
@@ -8,16 +9,16 @@ export default function TwoFactorChallenge() {
         recovery_code: '',
     });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: React.SubmitEvent) => {
         e.preventDefault();
         post(route('two-factor.login'));
     };
 
     return (
         <>
-            <Head title="Verifikasi Dua Langkah" />
-
-            <h1 className="mb-4 text-center text-2xl font-bold text-gray-800">Verifikasi Dua Langkah</h1>
+           <App2>
+            <Head><title>Verifikasi Dua Langkah</title></Head>
+            <h2 className="text-2xl font-bold mb-2">Verifikasi Dua Langkah</h2>
 
             <p className="mb-6 text-sm text-gray-600">
                 Masukkan kode autentikasi dari aplikasi autentikator Anda, atau gunakan kode pemulihan.
@@ -57,14 +58,11 @@ export default function TwoFactorChallenge() {
                     )}
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={processing}
-                    className="w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
-                >
-                    Verifikasi
-                </button>
+               <BlueButton href={route('two-factor.verification')} method="post" as="button" disabled={processing}>
+                Verifikasi
+                </BlueButton>
             </form>
+            </App2>
         </>
     );
 }

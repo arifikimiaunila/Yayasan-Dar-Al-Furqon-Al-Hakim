@@ -1,31 +1,30 @@
-import { useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import { Link, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import BlueButton from '@/Components/Parts/BlueButton';
 import RedButton from '@/Components/Parts/RedButton';
-import { useEffect, useState } from 'react';
 
-export default function Register() {
-  const { data, setData, post, errors, reset, processing } = useForm({
-    name: '',
+export default function Login() {
+  const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
-    password_confirmation: '',
+    remember: false,
   });
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    post(route('register'), {
-      onFinish: () => reset('password', 'password_confirmation'),
+    post(route('login'), {
+      onFinish: () => reset('password'),
     });
   };
 
   useEffect(() => {
     const handleShortcut = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key.toLowerCase() === 'n') {
+      if (event.ctrlKey && event.key.toLowerCase() === 'm') {
         event.preventDefault();
-        setIsVisible((prev) => !prev); // toggle tampil/sembunyi
+        setIsVisible((prev) => !prev);
       }
     };
     window.addEventListener('keydown', handleShortcut);
@@ -34,7 +33,7 @@ export default function Register() {
     };
   }, []);
 
-  if (!isVisible) return null; // default tersembunyi
+  if (!isVisible) return null; // login hanya muncul jika Ctrl+M ditekan
 
   return (
     <>
@@ -42,23 +41,8 @@ export default function Register() {
       <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50">
         {/* Card */}
         <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl">
-          <h2 className="text-2xl font-bold mb-4 text-center">Daftar</h2>
+          <h1 className="mb-6 text-center text-2xl font-bold text-gray-800">Login</h1>
           <form onSubmit={submit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Nama
-              </label>
-              <input
-                id="name"
-                type="text"
-                value={data.name}
-                onChange={(e) => setData('name', e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
-                autoComplete="name"
-                autoFocus
-              />
-              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
-            </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
@@ -70,6 +54,7 @@ export default function Register() {
                 onChange={(e) => setData('email', e.target.value)}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
                 autoComplete="username"
+                autoFocus
               />
               {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
             </div>
@@ -83,40 +68,39 @@ export default function Register() {
                 value={data.password}
                 onChange={(e) => setData('password', e.target.value)}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
-                autoComplete="new-password"
+                autoComplete="current-password"
               />
               {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
             </div>
-            <div>
-              <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700">
-                Konfirmasi Password
-              </label>
+            <label className="flex items-center gap-2 text-sm text-gray-600">
               <input
-                id="password_confirmation"
-                type="password"
-                value={data.password_confirmation}
-                onChange={(e) => setData('password_confirmation', e.target.value)}
-                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none"
-                autoComplete="new-password"
+                type="checkbox"
+                checked={data.remember}
+                onChange={(e) => setData('remember', e.target.checked)}
               />
-              {errors.password_confirmation && (
-                <p className="mt-1 text-sm text-red-600">{errors.password_confirmation}</p>
-              )}
+              Ingat saya
+            </label>
+            <div className="text-right">
+              <Link
+                href={route('password.request')}
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Lupa password?
+              </Link>
             </div>
             <BlueButton
-              href={route('register')}
+              href={route('login')}
               method="post"
               as="button"
               disabled={processing}
             >
-              {processing ? 'Memproses...' : 'Daftar'}
+              {processing ? 'Memproses...' : 'Masuk'}
             </BlueButton>
           </form>
-          <div className="mt-4 text-center">
-            <RedButton href={route('home')} disabled={processing}>
-              Cancel
-            </RedButton>
-          </div>
+          {/* Tombol Cancel */}
+          <RedButton href={route('home')} disabled={processing}>
+            Cancel
+          </RedButton>
         </div>
       </div>
     </>

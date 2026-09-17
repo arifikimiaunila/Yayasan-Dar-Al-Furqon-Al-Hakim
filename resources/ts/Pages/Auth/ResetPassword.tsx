@@ -1,6 +1,8 @@
-import { FormEvent } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import React from 'react';  
+import App2 from '@/Layouts/App2';
+import BlueButton from '@/Components/Parts/BlueButton';
 
 interface ResetPasswordProps {
     token: string;
@@ -15,7 +17,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
         password_confirmation: '',
     });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: React.SubmitEvent) => {
         e.preventDefault();
         post(route('password.update'), {
             onFinish: () => reset('password', 'password_confirmation'),
@@ -24,9 +26,10 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
 
     return (
         <>
+            <App2>
             <Head title="Reset Password" />
 
-            <h1 className="mb-6 text-center text-2xl font-bold text-gray-800">Reset Password</h1>
+            <h2 className="text-2xl font-bold mb-2">Reset Password</h2>
 
             <form onSubmit={submit} className="space-y-4">
                 <input type="hidden" value={data.token} />
@@ -79,14 +82,12 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                     )}
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={processing}
-                    className="w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
-                >
-                    Reset Password
-                </button>
+                <BlueButton href={route('password.update')} method="post" as="button" disabled={processing}>
+                Reset Password
+                </BlueButton>
+
             </form>
+            </App2>
         </>
     );
 }

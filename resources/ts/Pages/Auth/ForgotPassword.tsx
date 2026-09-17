@@ -1,21 +1,22 @@
-import { FormEvent } from 'react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import App2 from '@/Layouts/App2';
 
 export default function ForgotPassword() {
     const { status } = usePage<{ status?: string }>().props;
     const { data, setData, post, processing, errors } = useForm({ email: '' });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: React.SubmitEvent) => {
         e.preventDefault();
         post(route('password.email'));
     };
 
     return (
         <>
+        <App2>
             <Head title="Lupa Password" />
 
-            <h1 className="mb-2 text-center text-2xl font-bold text-gray-800">Lupa Password</h1>
+            <h2 className="text-2xl font-bold mb-2">Lupa Password</h2>
             <p className="mb-6 text-center text-sm text-gray-600">
                 Masukkan email Anda dan kami akan mengirim link untuk mereset password.
             </p>
@@ -49,10 +50,11 @@ export default function ForgotPassword() {
             </form>
 
             <p className="mt-4 text-center text-sm text-gray-600">
-                <Link href={route('login')} className="text-blue-600 hover:underline">
-                    Kembali ke login
+                <Link href={route('home')} className="text-blue-600 hover:underline">
+                    Kembali ke halaman pembuka.
                 </Link>
             </p>
+            </App2>
         </>
     );
 }
