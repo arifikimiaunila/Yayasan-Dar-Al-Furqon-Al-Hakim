@@ -1,23 +1,57 @@
-import { Link } from '@inertiajs/react';
-import { route } from 'ziggy-js';
+import { Head } from '@inertiajs/react';
+import { useMemo } from 'react';
+import App from "../Layouts/App";
 
 export default function Beranda() {
-    return (
-        <div className="max-w-6xl mx-auto py-10 px-4">
-            <h1 className="text-3xl font-bold text-gray-900">Yayasan Dar Al Furqon Al Hakim</h1>
-            <p className="text-gray-600 mt-2">Portal informasi yayasan berbasis Laravel, Inertia, dan React.</p>
+  const islamicGreeting = "Assalamu'alaikum Warahmatullahi Wabarakatuh";
 
-            <div className="grid md:grid-cols-2 gap-4 mt-8">
-                <Link href={route('video.index')} className="block rounded-xl border border-gray-200 p-6 hover:border-blue-500 hover:bg-blue-50 transition">
-                    <h2 className="text-lg font-semibold">Daftar Video</h2>
-                    <p className="text-sm text-gray-600 mt-1">Lihat video dakwah yang tersedia.</p>
-                </Link>
+  const timeGreeting = useMemo(() => {
+    const hour = new Date().getHours();
 
-                <Link href={route('post.edit')} className="block rounded-xl border border-gray-200 p-6 hover:border-blue-500 hover:bg-blue-50 transition">
-                    <h2 className="text-lg font-semibold">Manajemen Artikel</h2>
-                    <p className="text-sm text-gray-600 mt-1">Kelola artikel yang ditampilkan di website.</p>
-                </Link>
-            </div>
+    if (hour >= 5 && hour < 11) {
+      return 'Selamat Pagi';
+    } else if (hour >= 11 && hour < 15) {
+      return 'Selamat Siang';
+    } else if (hour >= 15 && hour < 18) {
+      return 'Selamat Sore';
+    } else {
+      return 'Selamat Malam';
+    }
+  }, []);
+
+  return (
+    <App currentRoute="home">
+    <Head><title>Beranda - Yayasan</title></Head>
+    <div className="py-12">
+      <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        {/* Greeting Card */}
+        <div className="bg-white overflow-hidden shadow-xl sm:rounded-lg p-8 text-center border-b-4 border-blue-600">
+          <h1 className="text-3xl font-extrabold text-gray-900 mb-2">
+            {islamicGreeting}
+          </h1>
+          <p className="text-xl text-blue-600 font-medium">
+            {timeGreeting}, Selamat Datang di Sistem Informasi
+          </p>
+          <h2 className="text-2xl font-bold text-gray-800 mt-2">
+            Yayasan Dar Al Furqon Al Hakim
+          </h2>
+
+          <div className="mt-8 flex justify-center">
+            <div className="h-1 w-24 bg-gray-200 rounded"></div>
+          </div>
+
+          <p className="mt-6 text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            "Membina generasi qur'ani yang berakhlak mulia, berilmu luas, dan
+            bermanfaat bagi sesama."
+          </p>
         </div>
-    );
+
+        {/* Quick Stats or Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          {/* Add dashboard content or quick links here */}
+        </div>
+      </div>
+    </div>
+    </App>
+  );
 }
