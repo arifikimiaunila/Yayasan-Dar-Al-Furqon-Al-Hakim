@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface Video {
   no_video: string;
@@ -27,6 +28,7 @@ const VideoTable: React.FC<Props> = ({ videos }) => {
 
   return (
     <App>
+      <Head><title>Daftar Video</title></Head>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse">
           <tbody>

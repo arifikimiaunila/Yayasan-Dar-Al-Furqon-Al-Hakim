@@ -1,5 +1,6 @@
 import React from 'react';
-import App from '../../Layouts/App';
+import App from '@/Layouts/App';
+import { Head } from '@inertiajs/react';
 
 interface Video {
   no_video: string;
@@ -15,6 +16,7 @@ interface Props {
 const VideoPlayer: React.FC<Props> = ({ video }) => {
   return (
     <App>
+      <Head><title>Detail Video</title></Head>
       <div className="flex flex-col items-center space-y-4">
         {/* Judul video */}
         <h2 className="text-lg font-semibold text-blue-600">
