@@ -47,12 +47,4 @@ class UserController extends Controller
             'user'    => $user,
         ]);
     }
-
-    public function destroy(int $user_id): RedirectResponse
-    {
-        $user = User::query()->findOrFail($user_id);
-        $user->delete();
-
-        return redirect()->route('home')->with('message', 'User berhasil dihapus.');
-    }
 }

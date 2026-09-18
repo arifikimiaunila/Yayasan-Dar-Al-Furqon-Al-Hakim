@@ -14,9 +14,9 @@ class ProfileController extends Controller
     /**
      * Show profile dari satu user tertentu.
      */
-    public function show(int $id): Response
+    public function show(int $user_id): Response
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($user_id);
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
@@ -55,9 +55,9 @@ class ProfileController extends Controller
     /**
      * Form edit user tertentu.
      */
-    public function edit(int $id): Response
+    public function edit(int $user_id): Response
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($user_id);
 
         return Inertia::render('Profile/Edit', [
             'user' => $user,
@@ -67,9 +67,9 @@ class ProfileController extends Controller
     /**
      * Update data user tertentu.
      */
-    public function update(Request $request, int $id): RedirectResponse
+    public function update(Request $request, int $user_id): RedirectResponse
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($user_id);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -129,9 +129,9 @@ public function index(): Response
 /**
  * Hapus user tertentu.
  */
-public function destroy(int $id): RedirectResponse
+public function destroy(int $user_id): RedirectResponse
 {
-    $user = User::findOrFail($id);
+    $user = User::findOrFail($user_id);
     $user->delete();
 
     return redirect()->route('home')->with('message', 'User berhasil dihapus.');
