@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import { NavbarAdmin2 } from '@/Components/NavbarAdmin2';
 import { NavbarSuperAdmin } from '@/Components/NavbarSuperAdmin';
 import { getCookie } from '@/Layouts/ts-js part/getCookies'; // pakai util buatan sendiri
 
@@ -10,7 +9,7 @@ interface AppLayoutProps {
   currentRoute?: string;
 }
 
-export default function Admin2({ children, currentRoute = 'home' }: AppLayoutProps) {
+export default function SuperAdmin({ children, currentRoute = 'home' }: AppLayoutProps) {
   // Ambil role dari cookies yang dibuat di app.blade.php
   const role = getCookie('user_role');
 
@@ -20,8 +19,7 @@ export default function Admin2({ children, currentRoute = 'home' }: AppLayoutPro
         <div className="flex min-h-screen flex-col">
           <Header currentRoute={currentRoute} />
 
-          {/* Render navbar sesuai role */}
-          {role === 'admin2' && <NavbarAdmin2 />}
+          {/* Navbar hanya ditampilkan jika role superadmin */}
           {role === 'superadmin' && <NavbarSuperAdmin />}
 
           <main
