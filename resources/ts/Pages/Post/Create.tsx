@@ -1,172 +1,78 @@
-import { Link, useForm } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { Head, router } from '@inertiajs/react';
 import { route } from 'ziggy-js';
-import TextEditor from '@/Components/TextEditor';
+import { initProgressBar } from '@/Layouts/ts-js part/progressbar';
+import TexEditor from '@/Components/TexEditor';
+import Admin1 from '@/Layouts/Admin1';
 
-interface PostFormData {
-    title: string;
-    body: string;
-    published: boolean;
-    published_at: string;
-}
+initProgressBar(); // dari progressbar.ts
 
-export default function Create() {
-    const form = useForm<PostFormData>({
-        title: '',
-        body: '',
-        published: false,
-        published_at: new Date().toISOString().slice(0, 16),
+const PostCreate: React.FC = () => {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [published, setPublished] = useState(false);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    router.post(route('post.store'), {
+      title,
+      body,
+      published,
     });
+  };
 
-    const submit = () => {
-        form.post(route('post.store'), {
-            preserveScroll: true,
-            onSuccess: () => form.reset(),
-        });
-    };
+  return (
+    <Admin1>
+    <Head title='Buat Artikel'/>
+      <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow">
+        <h2 className="text-xl font-bold mb-4">Create New Post</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Judul</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full border rounded px-3 py-2"
+              maxLength={100}
+              required
+            />
+          </div>
 
-    return (
-        <div className="max-w-5xl mx-auto py-10 px-4">
-            <div className="mb-8">
-                <Link
-                    href={route('post.edit')}
-                    className="text-sm text-blue-600 hover:underline flex items-center mb-2"
-                >
-                    Kembali ke Daftar Artikel
-                </Link>
-                <h1 className="text-3xl font-black text-gray-900 tracking-tight">
-                    Tulis Artikel Baru
-                </h1>
-                <p className="text-sm text-gray-500 mt-1">
-                    Lengkapi informasi artikel di bawah ini lalu publikasikan.
-                </p>
-            </div>
+          {/* Body menggunakan Texditor */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Artikel</label>
+            <TexEditor
+              {...({
+                value: body,
+                onChange: (value: any) => setBody(value),
+              } as any)}
+            />
+          </div>
 
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-                <form
-                    onSubmit={(event) => {
-                        event.preventDefault();
-                        submit();
-                    }}
-                    className="p-8 md:p-12 space-y-8"
-                >
-                    <div>
-                        <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-2">
-                            Judul Artikel
-                        </label>
-                        <input
-                            type="text"
-                            value={form.data.title}
-                            onChange={(event) =>
-                                form.setData('title', event.target.value)
-                            }
-                            className="w-full px-5 py-4 bg-gray-50 border-transparent rounded-2xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all text-xl font-bold"
-                            placeholder="Masukkan judul artikel..."
-                        />
-                        {form.errors.title && (
-                            <div className="text-red-500 text-xs mt-2 font-bold">
-                                {form.errors.title}
-                            </div>
-                        )}
-                    </div>
+          {/* Published checkbox */}
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
+              id="published"
+            />
+            <label htmlFor="published">Published</label>
+          </div>
 
-                    <div>
-                        <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-2">
-                            Isi Artikel
-                        </label>
-                        <TextEditor
-                            value={form.data.body}
-                            onChange={(html) => form.setData('body', html)}
-                        />
-                        {form.errors.body && (
-                            <div className="text-red-500 text-xs mt-2 font-bold">
-                                {form.errors.body}
-                            </div>
-                        )}
-                    </div>
+          {/* Submit button */}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+          >
+            Simpan
+          </button>
+        </form>
+      </div>
+    </Admin1>
+  );
+};
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-50">
-                        <div>
-                            <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-4">
-                                Status Publikasi
-                            </label>
-                            <div className="flex items-center space-x-4">
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        form.setData(
-                                            'published',
-                                            !form.data.published,
-                                        )
-                                    }
-                                    className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none ${
-                                        form.data.published
-                                            ? 'bg-green-500'
-                                            : 'bg-gray-300'
-                                    }`}
-                                >
-                                    <span
-                                        className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform shadow-md ${
-                                            form.data.published
-                                                ? 'translate-x-7'
-                                                : 'translate-x-1'
-                                        }`}
-                                    />
-                                </button>
-                                <span
-                                    className={`font-bold text-sm ${
-                                        form.data.published
-                                            ? 'text-green-600'
-                                            : 'text-gray-400'
-                                    }`}
-                                >
-                                    {form.data.published
-                                        ? 'PUBLISHED (Aktif)'
-                                        : 'DRAFT (Tersembunyi)'}
-                                </span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-black text-gray-700 uppercase tracking-widest mb-2">
-                                Tanggal Terbit
-                            </label>
-                            <input
-                                type="datetime-local"
-                                value={form.data.published_at}
-                                onChange={(event) =>
-                                    form.setData(
-                                        'published_at',
-                                        event.target.value,
-                                    )
-                                }
-                                className="w-full px-4 py-3 bg-gray-50 border-transparent rounded-xl focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all font-bold"
-                            />
-                            {form.errors.published_at && (
-                                <div className="text-red-500 text-xs mt-2 font-bold">
-                                    {form.errors.published_at}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="pt-10 flex flex-col md:flex-row items-center justify-between gap-4">
-                        <Link
-                            href={route('post.edit')}
-                            className="px-8 py-4 text-gray-400 font-bold hover:text-gray-600 transition-colors"
-                        >
-                            Batal
-                        </Link>
-
-                        <button
-                            type="submit"
-                            disabled={form.processing}
-                            className="w-full md:w-auto px-10 py-4 bg-gray-900 text-white rounded-2xl font-black shadow-xl shadow-gray-200 hover:bg-blue-600 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center"
-                        >
-                            {form.processing ? 'Menyimpan...' : 'Publikasikan Artikel'}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-}
+export default PostCreate;
