@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\FlesController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataYayasanController;
@@ -15,6 +16,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
+Route::middleware(['auth', 'verified', 'role:admin1|admin2|superadmin'])->group(function () {
+Route::get('/profile/{user_id}', [ProfileController::class, 'show'])
+    ->name('profile.show');
+});
 
 Route::prefix('video')->group(function () {
     Route::view('/index', [VideoController::class, 'index'])->name('video.index');
