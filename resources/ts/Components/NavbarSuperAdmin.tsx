@@ -18,7 +18,8 @@ const navigationData: MenuItem[] = [
   { title: "Edit File", href: route('file.edit') },
   { title: "Buat Data Yayasan", href: route('data_yayasan.create') },
   { title: "Edit Data Yayasan", href: route('data_yayasan.edit') },
-  { title: "Edit Admin", href: route('users.index') }
+  { title: "Edit Admin", href: route('users.index') },
+  { title: "Edit Profil", href: route('profile.show') }
 ];
 
 export const NavbarSuperAdmin: React.FC = () => {

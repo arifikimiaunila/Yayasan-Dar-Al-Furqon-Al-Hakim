@@ -7,11 +7,14 @@ interface MenuItem {
   subItems?: { title: string; href: string }[];
 }
 
+const userId = Number((window as any)?.Laravel?.user?.id ?? 0);
+
 const navigationData: MenuItem[] = [
   { title: "Buat Video", href: route('video.create') },
   { title: "Edit Video", href: route('video.edit') },
   { title: "Buat File", href: route('file.create') },
-  { title: "Edit File", href: route('file.edit') }
+  { title: "Edit File", href: route('file.edit') },
+  { title: "Edit Profil", href: route('profile.show', userId) }
 ];
 
 export const NavbarAdmin2: React.FC = () => {
