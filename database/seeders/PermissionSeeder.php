@@ -207,6 +207,7 @@ $admin1->givePermissions([
 'post.store',
 'post.choose',
 'post.update',
+'profile.show'
 ]);
 
 $admin2 = Role::find(2);
@@ -223,6 +224,7 @@ $admin2->givePermissions([
 'file.choose',
 'file.update',
 'file.destroy',
+'profile.show'
 ]);
 
 $role3=Role::find(3);
@@ -261,7 +263,8 @@ $role3->givePermissions([
 'team.role_store',
 'team.role_update',
 'team.show',
-'team.delete'
+'team.delete',
+'profile.show'
 ]);
 }
 }
