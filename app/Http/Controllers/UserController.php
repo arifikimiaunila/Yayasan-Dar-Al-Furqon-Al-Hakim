@@ -5,46 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\UserResource;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(User::query()->latest('id')->paginate(10));
+        // Gunakan collection resource agar setiap item diformat oleh UserResource
+        $users = User::query()->latest('id')->paginate(10);
+
+        return UserResource::collection($users)->response();
     }
 
     public function show(int $user_id): JsonResponse
     {
         $user = User::query()->findOrFail($user_id);
 
-        return response()->json($user);
-    }
-
-    public function profile_show(int $user_id)
-    {
-        $user = User::query()->findOrFail($user_id);
-        return Inertia::render('Profile/Show', [
-            'user' => $user,
-        ]);
+        // Bungkus dengan UserResource
+        return (new UserResource($user))->response();
     }
 
     public function update(Request $request, int $user_id): JsonResponse
     {
         $user = User::query()->findOrFail($user_id);
 
-        // Validasi sederhana (bisa disesuaikan)
         $validated = $request->validate([
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user_id,
         ]);
 
-        // Update data user
         $user->update($validated);
 
-        return response()->json([
+        // Return dengan UserResource agar hasil update tetap difilter
+        return (new UserResource($user))->additional([
             'message' => 'User berhasil diupdate.',
-            'user'    => $user,
-        ]);
+        ])->response();
     }
 }
