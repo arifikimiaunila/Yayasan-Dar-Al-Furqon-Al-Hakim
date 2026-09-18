@@ -21,6 +21,14 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function profile_show(int $user_id)
+    {
+        $user = User::query()->findOrFail($user_id);
+        return Inertia::render('Profile/Show', [
+            'user' => $user,
+        ]);
+    }
+
     public function update(Request $request, int $user_id): JsonResponse
     {
         $user = User::query()->findOrFail($user_id);
