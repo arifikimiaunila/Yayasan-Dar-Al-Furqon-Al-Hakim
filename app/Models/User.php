@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Role;
+use App\Models\Team;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,62 +17,56 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, HasRolesAndPermissions, Notifiable, TwoFactorAuthenticatable, HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-  protected $table='users';
-  protected $primaryKey='user_id';
-  protected $fillable = [
-	  	'name',
-        'email',
-        'password'
-        ];
-  protected $visible = [
+    protected $table = 'users';
+    protected $primaryKey = 'user_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    protected $fillable = [
         'name',
-        'email'
+        'email',
+        'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    protected $visible = [
+        'name',
+        'email',
+    ];
+
     protected $hidden = [
         'password',
-        'rememberToken'
+        'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'password' => 'hashed',
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
     ];
 
-	protected $keyType = 'string';
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user')
+            ->withPivot(['user_type', 'team_id'])
+            ->withTimestamps();
+    }
 
- static function boot() {
-parent::boot();
-static::creating(function ($model) {
-if (empty($model->{
-$model->getKeyName()
-})) {
- $model->{
-$model->getKeyName()} = Str::uuid()->toString();
-}
-});
- }
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
 
-public function getRouteKeyName()
-{
-return 'slug';
- }
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = Str::uuid()->toString();
+            }
+        });
+    }
 
-	public $incrementing = false;
-        
+    public function getRouteKeyName()
+    {
+        return 'user_id'; // atau 'slug' jika memang ada kolom slug
+    }
 }
