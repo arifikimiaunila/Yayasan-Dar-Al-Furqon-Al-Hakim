@@ -27,7 +27,7 @@ protected $stopOnFirstFailure = true;
         return [
             'user_id'=>'required',
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id
+            'email' => 'required|email|unique:users,email,'.$user_id
         ];
     }
 }

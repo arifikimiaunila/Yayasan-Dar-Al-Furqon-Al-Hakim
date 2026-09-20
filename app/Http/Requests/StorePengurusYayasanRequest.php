@@ -29,7 +29,7 @@ class StorePengurusYayasanRequest extends FormRequest
             'no_telp' => 'nullable|numeric',
             'kategori' => 'required|string|max:100',
             'published' => 'required|boolean',
-            'link_foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'link_foto' => 'nullable|url|max:300'
         ];
     }
 }
