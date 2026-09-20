@@ -1,11 +1,12 @@
-import { FormEvent } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { route } from 'ziggy-js';
+import BlueButton from '@/Components/Parts/BlueButton';
+import App2 from '@/Layouts/App2';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({ password: '' });
 
-    const submit = (e: FormEvent) => {
+    const submit = (e: React.FormEvent) => {
         e.preventDefault();
         post(route('password.confirm'), {
             onFinish: () => reset('password'),
@@ -14,9 +15,10 @@ export default function ConfirmPassword() {
 
     return (
         <>
+        <App2>
             <Head title="Konfirmasi Password" />
 
-            <h1 className="mb-4 text-center text-2xl font-bold text-gray-800">Konfirmasi Password</h1>
+            <h2 className="text-2xl font-bold mb-2">Konfirmasi Password</h2>
 
             <p className="mb-6 text-sm text-gray-600">
                 Ini adalah area aman aplikasi. Harap konfirmasi password Anda sebelum melanjutkan.
@@ -39,14 +41,14 @@ export default function ConfirmPassword() {
                     {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
                 </div>
 
-                <button
-                    type="submit"
+                 <BlueButton
+                    as="button"
                     disabled={processing}
-                    className="w-full rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
                 >
                     Konfirmasi
-                </button>
+                </BlueButton>
             </form>
+            </App2>
         </>
     );
 }

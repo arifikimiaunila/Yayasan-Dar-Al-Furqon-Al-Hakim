@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, router } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 import BlueButton from '@/Components/Parts/BlueButton';
 import RedButton from '@/Components/Parts/RedButton';
 
 export default function Login() {
-  const { data, setData, post, processing, errors, reset } = useForm({
+  const { data, setData, processing, errors, reset } = useForm({
     email: '',
     password: '',
     remember: false,
@@ -13,11 +13,11 @@ export default function Login() {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const submit = (e: React.SubmitEvent) => {
+  const submit = (e: any) => {
     e.preventDefault();
-    post(route('login'), {
-      onFinish: () => reset('password'),
-    });
+    // langsung kirim ke route login, cookies akan di-set oleh backend
+    router.post(route('login'), data);
+    reset('password');
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Login() {
     };
   }, []);
 
-  if (!isVisible) return null; // login hanya muncul jika Ctrl+M ditekan
+  if (!isVisible) return null;
 
   return (
     <>
@@ -81,19 +81,11 @@ export default function Login() {
               Ingat saya
             </label>
             <div className="text-right">
-              <Link
-                href={route('password.request')}
-                className="text-sm text-blue-600 hover:underline"
-              >
+              <Link href={route('password.request')} className="text-sm text-blue-600 hover:underline">
                 Lupa password?
               </Link>
             </div>
-            <BlueButton
-              href={route('login')}
-              method="post"
-              as="button"
-              disabled={processing}
-            >
+            <BlueButton as="button" disabled={processing}>
               {processing ? 'Memproses...' : 'Masuk'}
             </BlueButton>
           </form>
