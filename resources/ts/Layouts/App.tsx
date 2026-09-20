@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
-import { NavbarGuest } from '../Components/NavbarGuest';
+import { NavbarGuest } from '@/Components/NavbarGuest';
 
 interface AppLayoutProps {
   children?: ReactNode;
