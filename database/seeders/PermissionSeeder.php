@@ -207,7 +207,11 @@ $admin1->givePermissions([
 'post.store',
 'post.choose',
 'post.update',
-'profile.show'
+'profile.show', 
+'profile.update',
+'profile.delete',
+'team-invitations.accept',
+'team-invitations.reject'
 ]);
 
 $admin2 = Role::find(2);
@@ -218,13 +222,17 @@ $admin2->givePermissions([
 'video.update',
 'video.delete',
 'video.choose',
-'file.create', 
-'file.edit',
-'file.store',
-'file.choose',
-'file.update',
-'file.destroy',
-'profile.show'
+'files.create', 
+'files.edit',
+'files.store',
+'files.choose',
+'files.update',
+'files.delete',
+'profile.show',
+'profile.update',
+'profile.delete',
+'team-invitations.accept'
+,'team-invitations.reject'
 ]);
 
 $role3=Role::find(3);
@@ -235,12 +243,12 @@ $role3->givePermissions([
 'video.store',
 'video.update',
 'video.choose',
-'file.create', 
-'file.edit',
-'file.store',
-'file.choose',
-'file.update',
-'file.destroy',
+'files.create', 
+'files.edit',
+'files.store',
+'files.choose',
+'files.update',
+'files.delete',
 'pengurus_yayasan.create', 
 'pengurus_yayasan.edit', 
 'pengurus_yayasan.delete',
@@ -264,7 +272,14 @@ $role3->givePermissions([
 'team.role_update',
 'team.show',
 'team.delete',
-'profile.show'
+'profile.show',
+'profile.update',
+'profile.delete',
+'team-invitations.store',
+'team-invitations.accept',
+'team-invitations.reject',
+'users.roles.assign', 
+'users.roles.remove'
 ]);
 }
 }
