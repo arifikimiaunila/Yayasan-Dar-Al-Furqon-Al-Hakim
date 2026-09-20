@@ -2,26 +2,20 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\TwoFactorLoginController;
+use App\Http\Controllers\TeamInvitationController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRoleController;
+use App\Mail\RecoveryCodesMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Auth\TwoFactorLoginController;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\RecoveryCodesMail;
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->name('login');
 
-Route::post('/register', function (Request $request, CreatesNewUsers $creator) {
-    $user = $creator->create($request->all());
-    // optional: langsung buat token Sanctum
-    $token = $user->createToken($request->device_name ?? 'default');
-    return response()->json([
-        'token' => $token->plainTextToken,
-        'token_type' => 'Bearer',
-        'user' => $user,
-    ]);
-})->name('register');
+Route::post('/register', [ProfileController::class, 'store'])->name('register');
 
 Route::get('/two-factor-challenge', function () {
     return Inertia::render('Auth/TwoFactorChallenge');
@@ -64,18 +58,30 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', function () {
-        return Inertia::render('Profile');
-    })->name('profile.show');
+Route::middleware(['auth', 'password.confirm', 'verified', 'role:admin1|admin2|superadmin'])->group(function () {
+Route::get('/profile/{user_id}', [ProfileController::class, 'show'])
+    ->name('profile.show');
+Route::put('/user/{user_id}/profile-information', [ProfileController::class, 'update'])
+    ->name('profile.update');
+Route::delete('/profile/{user_id}', [ProfileController::class, 'destroy'])
+    ->name('profile.delete');
+// Menerima undangan
+Route::get('/team-invitations/{invitationId}/accept', [TeamInvitationController::class, 'accept'])
+    ->name('team-invitations.accept');
+
+// Menolak undangan
+Route::get('/team-invitations/{invitationId}/reject', [TeamInvitationController::class, 'reject'])
+    ->name('team-invitations.reject');
 });
 
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user_id}', [UserController::class, 'show'])->name('users.show');
     Route::put('/users/{user_id}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user_id}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/users/{user_id}', [UserController::class, 'destroy'])->name('users.delete');
     Route::post('/users/{user_id}/roles', [UserRoleController::class, 'assignRole'])->name('users.roles.assign');
     Route::delete('/users/{user_id}/roles/{role}', [UserRoleController::class, 'removeRole'])->name('users.roles.remove');
+    Route::post('/team-invitations', [TeamInvitationController::class, 'store'])
+    ->name('team-invitations.store');
 });
 

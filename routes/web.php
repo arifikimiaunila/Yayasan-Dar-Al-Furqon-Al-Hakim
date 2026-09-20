@@ -17,11 +17,6 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::middleware(['auth', 'verified', 'role:admin1|admin2|superadmin'])->group(function () {
-Route::get('/profile/{user_id}', [ProfileController::class, 'show'])
-    ->name('profile.show');
-});
-
 Route::prefix('video')->group(function () {
     Route::view('/index', [VideoController::class, 'index'])->name('video.index');
     Route::view('/{no_video}', [VideoController::class, 'show'])->name('video.show');
@@ -67,7 +62,7 @@ Route::prefix('files')->group(function () {
         Route::view('/edit', [FlesController::class, 'edit'])->name('files.edit');
         Route::view('/{file_id}/choose', [FlesController::class, 'choose_one'])->name('files.choose');
         Route::put('/{file_id}/update', [FlesController::class, 'update'])->name('files.update');
-        Route::delete('/{file_id}/delete', [FlesController::class, 'destroy'])->name('files.destroy');
+        Route::delete('/{file_id}/delete', [FlesController::class, 'destroy'])->name('files.delete');
     });
 });
 
@@ -80,6 +75,6 @@ Route::prefix('pengurus_yayasan')->group(function () {
         Route::view('/{id_pengurus}/edit', [PengurusYayasanController::class, 'edit'])->name('pengurus_yayasan.edit');
         Route::view('/{id_pengurus}/choose', [PengurusYayasanController::class, 'choose_one'])->name('pengurus_yayasan.choose');
         Route::put('/{id_pengurus}/update', [PengurusYayasanController::class, 'update'])->name('pengurus_yayasan.update');
-        Route::delete('/{id_pengurus}/delete', [PengurusYayasanController::class, 'destroy'])->name('pengurus_yayasan.destroy');
+        Route::delete('/{id_pengurus}/delete', [PengurusYayasanController::class, 'destroy'])->name('pengurus_yayasan.delete');
     });
 });
