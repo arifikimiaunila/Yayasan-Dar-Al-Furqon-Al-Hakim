@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RecoveryCodeMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,14 +27,6 @@ class ProfileController extends Controller
     }
 
     /**
-     * Form create user baru.
-     */
-    public function create(): Response
-    {
-        return Inertia::render('Profile/Create');
-    }
-
-    /**
      * Simpan user baru.
      */
     public function store(Request $request): RedirectResponse
@@ -41,15 +35,35 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
+            'device_name' => ['nullable', 'string'],
         ]);
 
-        User::create([
+        // Buat user baru
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('home')->with('message', 'User berhasil dibuat.');
+        // Buat token Sanctum
+        $token = $user->createToken($validated['device_name'] ?? 'default')->plainTextToken;
+
+        // Buat recovery code (misalnya random string 10 karakter)
+        $recoveryCode = strtoupper(str()->random(10));
+
+        // Simpan recovery code ke database
+        $user->forceFill([
+            'recovery_code' => $recoveryCode,
+        ])->save();
+
+        // Kirim recovery code via email
+        Mail::to($user->email)->send(new RecoveryCodeMail($recoveryCode));
+
+        // Redirect dengan flash message + token
+        return redirect()
+            ->route('home')
+            ->with('status', 'Registrasi berhasil, token dan recovery code sudah dikirim ke email.')
+            ->with('token', $token);
     }
 
     /**
@@ -87,53 +101,15 @@ class ProfileController extends Controller
 
         return redirect()->route('home')->with('message', 'User berhasil diupdate.');
     }
-
+    
     /**
-     * Two-factor auth helper.
+     * Hapus user tertentu.
      */
-    private function twoFactorAuthData(User $user): array
+    public function destroy(int $user_id): RedirectResponse
     {
-        $enabled = ! is_null($user->two_factor_secret);
-        $confirmed = ! is_null($user->two_factor_confirmed_at);
+        $user = User::findOrFail($user_id);
+        $user->delete();
 
-        $qrCode = null;
-        $recoveryCodes = [];
-
-        if ($enabled && ! $confirmed) {
-            $qrCode = $user->twoFactorQrCodeSvg();
-
-            if ($user->two_factor_recovery_codes) {
-                $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
-            }
-        }
-
-        return [
-            'enabled' => $enabled,
-            'confirmed' => $confirmed,
-            'qr_code' => $qrCode,
-            'recovery_codes' => $recoveryCodes,
-        ];
+        return redirect()->route('home')->with('message', 'User berhasil dihapus.');
     }
-    /**
- * Tampilkan daftar semua user.
- */
-public function index(): Response
-{
-    $users = User::paginate(10); // bisa juga pakai all() atau simplePaginate()
-
-    return Inertia::render('Profile/Index', [
-        'users' => $users,
-    ]);
-}
-
-/**
- * Hapus user tertentu.
- */
-public function destroy(int $user_id): RedirectResponse
-{
-    $user = User::findOrFail($user_id);
-    $user->delete();
-
-    return redirect()->route('home')->with('message', 'User berhasil dihapus.');
-}
 }

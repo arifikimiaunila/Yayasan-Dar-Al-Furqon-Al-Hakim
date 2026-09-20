@@ -24,16 +24,6 @@ class DataYayasanController extends Controller
         return redirect()->route('home')->with('message', 'Data yayasan berhasil dibuat.');
     }
 
-    // Tampilkan detail data yayasan
-    public function show(int $yayasan_id): Response
-    {
-    $data = data_yayasan::query()->where('yayasan_id', $yayasan_id)->firstOrFail();
-
-    return Inertia::render('Data_Yayasan/Show', [
-        'yayasan' => $data,
-    ]);
-    }
-
     // Form edit data yayasan
     public function edit(int $yayasan_id): Response
     {

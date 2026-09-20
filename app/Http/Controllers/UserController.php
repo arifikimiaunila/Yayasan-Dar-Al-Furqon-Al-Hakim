@@ -10,21 +10,29 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        // Gunakan collection resource agar setiap item diformat oleh UserResource
-        $users = User::query()->latest('id')->paginate(10);
+    public function index(): Response
+{
+    // Ambil semua data user, diformat dengan UserResource
+    $users = UserResource::collection(
+        User::query()->latest('id')->get()
+    );
 
-        return UserResource::collection($users)->response();
-    }
+    // Render ke komponen React/Vue di resources/js/Pages/User/Index
+    return Inertia::render('User/Index', [
+        'users' => $users,
+    ]);
+}
 
-    public function show(int $user_id): JsonResponse
-    {
-        $user = User::query()->findOrFail($user_id);
+    public function show(int $user_id): Response
+{
+    $user = User::with(['roles', 'teams'])->findOrFail($user_id);
 
-        // Bungkus dengan UserResource
-        return (new UserResource($user))->response();
-    }
+    return Inertia::render('User/Show', [
+        'user' => new UserResource($user),
+        'roles' => $user->roles,
+        'teams' => $user->teams,
+    ]);
+}
 
     public function update(Request $request, int $user_id): JsonResponse
     {
@@ -42,4 +50,39 @@ class UserController extends Controller
             'message' => 'User berhasil diupdate.',
         ])->response();
     }
+
+    public function destroy($userId)
+{
+    // Cari tim berdasarkan user_id
+    $team = \DB::table('teams')->where('user_id', $userId)->first();
+
+    if (!$team) {
+        return response()->json([
+            'message' => 'Tim tidak ditemukan untuk user ini.'
+        ], 404);
+    }
+
+    $teamId = $team->team_id;
+
+    // Hapus relasi di team_user
+    \DB::table('team_user')->where('team_id', $teamId)->delete();
+
+    // Hapus undangan terkait tim
+    \DB::table('team_invitations')->where('team_id', $teamId)->delete();
+
+    // Hapus role_user terkait tim
+    \DB::table('role_user')->where('team_id', $teamId)->delete();
+
+    // Hapus permission_user terkait tim
+    \DB::table('permission_user')->where('team_id', $teamId)->delete();
+
+    // Hapus tim
+    \DB::table('teams')->where('team_id', $teamId)->delete();
+
+    return response()->json([
+        'message' => 'Tim dan semua relasi berhasil dihapus berdasarkan user_id.',
+        'team_id' => $teamId
+    ]);
+}
+
 }
